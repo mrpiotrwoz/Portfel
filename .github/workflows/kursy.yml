@@ -1,0 +1,38 @@
+name: Kursy
+
+on:
+  schedule:
+    - cron: "25 16 * * 1-5"
+    - cron: "40 21 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kursy
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Pobierz kursy
+        run: node scripts/update.mjs
+      - name: Zapisz zmiany
+        run: |
+          git config user.name "kursy-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/latest.json data/history.json
+          if git diff --cached --quiet; then
+            echo "Bez zmian."
+          else
+            git commit -m "Kursy $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git push
+          fi
+          
