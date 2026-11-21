@@ -14,31 +14,65 @@ async function writeJSON(name, data) {
   await writeFile(new URL(name, DIR), JSON.stringify(data, null, 1) + "\n");
 }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-async function get(url, asText = false) {
-  for (let i = 0; i < 3; i++) {
-    try {
-      const res = await fetch(url, { headers: { "User-Agent": UA, Accept: asText ? "text/csv,*/*" : "application/json,*/*" } });
-      if (res.status === 429 || res.status >= 500) throw new Error("HTTP " + res.status);
-      if (!res.ok) throw Object.assign(new Error("HTTP " + res.status), { fatal: true });
-      return asText ? await res.text() : await res.json();
-    } catch (e) {
-      if (e.fatal || i === 2) throw e;
-      await sleep(1500 * (i + 1));
-    }
-  }
-}
 const round = (x, d = 4) => Math.round(x * 10 ** d) / 10 ** d;
 
-// Data (RRRR-MM-DD) w strefie czasowej giełdy.
+// Pobranie z jedną powtórką przy przeciążeniu (429/5xx).
+async function req(url, { type = "json", headers = {} } = {}) {
+  for (let i = 0; i < 2; i++) {
+    const res = await fetch(url, { headers: { "User-Agent": UA, "Accept-Language": "en-US,en;q=0.9", ...headers } });
+    if ((res.status === 429 || res.status >= 500) && i === 0) { await sleep(1500); continue; }
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return type === "json" ? res.json() : res.text();
+  }
+}
+// Źródło, które kilka razy z rzędu odmawia, wyłączam do końca przebiegu (oszczędza czas).
+const strikes = {}, disabled = new Set();
+function noteFail(src, msg) {
+  if (/HTTP (429|403)|crumb|ciasteczk/.test(msg)) { strikes[src] = (strikes[src] || 0) + 1; if (strikes[src] >= 3) disabled.add(src); }
+}
+function noteOk(src) { strikes[src] = 0; }
+
+// Data (RRRR-MM-DD) i czas w strefie czasowej giełdy.
 function dayIn(tz, unixSec) {
   return new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" })
     .format(new Date(unixSec * 1000));
 }
+function minutesIn(tz) {
+  const p = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+  const v = (t) => +p.find((x) => x.type === t).value;
+  return (v("hour") % 24) * 60 + v("minute");
+}
+const MARKET = {
+  US: { tz: "America/New_York", close: 16 * 60 + 10 },
+  PL: { tz: "Europe/Warsaw", close: 17 * 60 + 10 }
+};
+// Czy kurs z danego dnia to już zamknięcie sesji.
+function isFinal(mkt, date) {
+  const m = MARKET[mkt] || MARKET.US;
+  const today = dayIn(m.tz, Date.now() / 1000);
+  return date < today || (date === today && minutesIn(m.tz) >= m.close);
+}
+function simpleResult(mkt, price, date, prevClose, currency, source) {
+  const final = isFinal(mkt, date);
+  return { price, date, prevClose, currency, final, closes: final ? [{ date, close: price }] : [], source };
+}
 
-// ---------- Yahoo Finance (wykres dzienny) ----------
+// ---------- Yahoo Finance (z ciasteczkiem i „crumb”; bez nich zwraca 429) ----------
+let ySess = null;
+async function yahooSession() {
+  if (ySess) return ySess;
+  const r = await fetch("https://fc.yahoo.com/", { headers: { "User-Agent": UA }, redirect: "manual" });
+  const cookie = (r.headers.getSetCookie ? r.headers.getSetCookie() : []).map((c) => c.split(";")[0]).join("; ");
+  if (!cookie) throw new Error("brak ciasteczka Yahoo");
+  const crumb = String(await req("https://query2.finance.yahoo.com/v1/test/getcrumb", { type: "text", headers: { Cookie: cookie } })).trim();
+  if (!crumb || crumb.length > 40 || /[<{]/.test(crumb)) throw new Error("brak crumb Yahoo");
+  ySess = { cookie, crumb };
+  return ySess;
+}
 async function yahoo(ticker) {
-  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?range=1mo&interval=1d&includePrePost=false`;
-  const j = await get(url);
+  const { cookie, crumb } = await yahooSession();
+  const url = `https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?range=1mo&interval=1d&includePrePost=false&crumb=${encodeURIComponent(crumb)}`;
+  const j = await req(url, { headers: { Cookie: cookie } });
   const r = j && j.chart && j.chart.result && j.chart.result[0];
   if (!r || !r.meta) throw new Error("brak danych");
   const m = r.meta, tz = m.exchangeTimezoneName || "UTC";
@@ -47,50 +81,74 @@ async function yahoo(ticker) {
   const regEnd = m.currentTradingPeriod && m.currentTradingPeriod.regular && m.currentTradingPeriod.regular.end;
   const sessionOver = regEnd ? now >= regEnd : false;
   const ts = r.timestamp || [], closes = (r.indicators && r.indicators.quote && r.indicators.quote[0] && r.indicators.quote[0].close) || [];
-  const bars = [];
-  ts.forEach((t, i) => { if (closes[i] > 0) bars.push({ date: dayIn(tz, t), close: closes[i] }); });
-  // Jeden wpis na dzień (Yahoo czasem dubluje bieżący dzień).
   const byDay = new Map();
-  bars.forEach((b) => byDay.set(b.date, b.close));
+  ts.forEach((t, i) => { if (closes[i] > 0) byDay.set(dayIn(tz, t), closes[i]); });
   const price = m.regularMarketPrice;
   const date = m.regularMarketTime ? dayIn(tz, m.regularMarketTime) : today;
   if (!(price > 0)) throw new Error("brak kursu");
   byDay.set(date, price); // ostatni kurs sesji jest dokładniejszy niż świeca dzienna
   const days = [...byDay.keys()].sort();
   const prevDay = days.filter((d) => d < date).pop();
-  // Zamknięte dni: wcześniejsze niż dziś albo dzisiejszy po końcu sesji.
   const closed = days.filter((d) => d < today || (d === today && sessionOver)).map((d) => ({ date: d, close: byDay.get(d) }));
-  return {
-    price, date, currency: m.currency, prevClose: prevDay ? byDay.get(prevDay) : (m.chartPreviousClose || null),
-    final: date < today || sessionOver, time: m.regularMarketTime ? new Date(m.regularMarketTime * 1000).toISOString() : null,
-    closes: closed, source: "yahoo"
-  };
+  return { price, date, currency: m.currency, prevClose: prevDay ? byDay.get(prevDay) : (m.chartPreviousClose || null),
+    final: date < today || sessionOver, closes: closed, source: "yahoo" };
 }
 
-// ---------- Stooq (zapasowe źródło, tylko bieżący kurs) ----------
-async function stooq(sym) {
-  const txt = await get(`https://stooq.com/q/l/?s=${encodeURIComponent(sym)}&f=sd2t2ohlc&h&e=csv`, true);
-  const lines = String(txt).trim().split(/\r?\n/);
-  if (lines.length < 2) throw new Error("brak danych");
-  const head = lines[0].toLowerCase().split(","), row = lines[1].split(",");
-  const v = (k) => row[head.indexOf(k)];
-  const close = parseFloat(v("close")), date = v("date");
-  if (!(close > 0) || !/^\d{4}-\d{2}-\d{2}$/.test(date || "")) throw new Error("brak kursu");
-  return { price: close, date, prevClose: null, final: null, time: null, closes: [], source: "stooq" };
+// ---------- Google Finance (strona notowania) ----------
+function num(s) {
+  const n = parseFloat(String(s || "").replace(/[^0-9.,-]/g, "").replace(/,/g, ""));
+  return isFinite(n) ? n : null;
 }
+async function google(code, mkt) {
+  const html = await req(`https://www.google.com/finance/quote/${code}?hl=en`, { type: "text" });
+  const price = num((html.match(/data-last-price="([\d.,]+)"/) || [])[1]);
+  if (!(price > 0)) throw new Error("brak kursu");
+  const ts = +((html.match(/data-last-normal-market-timestamp="(\d+)"/) || [])[1] || 0);
+  const currency = (html.match(/data-currency-code="([A-Z]{3})"/) || [])[1] || null;
+  const prev = num((html.match(/Previous close<\/div>[\s\S]{0,400}?>([^<>]*\d[^<>]*)<\/div>/) || [])[1]);
+  const tz = MARKET[mkt].tz;
+  const date = ts ? dayIn(tz, ts) : dayIn(tz, Date.now() / 1000);
+  return simpleResult(mkt, price, date, prev, currency, "google");
+}
+const GOOGLE_EX = { US: ["NASDAQ", "NYSE", "NYSEAMERICAN", "NYSEARCA"], PL: ["WSE"] };
 
+// ---------- Stooq (CSV) ----------
+async function stooq(sym, mkt) {
+  let lastErr;
+  for (const host of ["stooq.pl", "stooq.com"]) {
+    try {
+      const txt = await req(`https://${host}/q/l/?s=${encodeURIComponent(sym)}&f=sd2t2ohlc&h&e=csv`, { type: "text" });
+      const lines = String(txt).trim().split(/\r?\n/);
+      if (lines.length < 2) throw new Error("brak danych");
+      const head = lines[0].toLowerCase().split(","), row = lines[1].split(",");
+      const v = (k) => row[head.indexOf(k)];
+      const close = parseFloat(v("close")), date = v("date");
+      if (!(close > 0) || !/^\d{4}-\d{2}-\d{2}$/.test(date || "")) throw new Error("brak kursu");
+      return simpleResult(mkt, close, date, null, null, "stooq");
+    } catch (e) { lastErr = e; }
+  }
+  throw lastErr;
+}
 function stooqSym(sym) {
   const [base, mkt] = sym.split(".");
   if (mkt === "PL") return base.toLowerCase();
   return `${base}.${mkt || "us"}`.toLowerCase();
 }
 
+// Próbuje kolejnych źródeł, aż któreś poda kurs.
 async function quote(cands) {
   const errs = [];
   for (const c of cands) {
-    try { return await (c.src === "yahoo" ? yahoo(c.t) : stooq(c.t)); }
-    catch (e) { errs.push(`${c.src}:${c.t} ${e.message}`); }
-    await sleep(400);
+    if (disabled.has(c.src)) { errs.push(`${c.src}: wyłączone`); continue; }
+    try {
+      const q = c.src === "yahoo" ? await yahoo(c.t) : c.src === "google" ? await google(c.t, c.mkt) : await stooq(c.t, c.mkt);
+      noteOk(c.src);
+      return q;
+    } catch (e) {
+      noteFail(c.src, e.message);
+      errs.push(`${c.src}:${c.t} ${e.message}`);
+    }
+    await sleep(250);
   }
   throw new Error(errs.join("; "));
 }
@@ -99,7 +157,7 @@ async function quote(cands) {
 async function nbp() {
   const out = {};
   for (const code of ["USD", "EUR"]) {
-    const j = await get(`https://api.nbp.pl/api/exchangerates/rates/A/${code}/last/30/?format=json`);
+    const j = await req(`https://api.nbp.pl/api/exchangerates/rates/A/${code}/last/30/?format=json`);
     out[code] = (j.rates || []).map((r) => ({ date: r.effectiveDate, mid: r.mid }));
   }
   return out;
@@ -123,9 +181,13 @@ const prices = { ...(latest.prices || {}) };
 const closesBySym = {};
 const ok = [], failed = [];
 for (const s of watch.symbols) {
+  const mkt = s.sym.endsWith(".PL") ? "PL" : "US";
+  const base = s.sym.split(".")[0];
   const cands = [];
   if (s.yahoo) cands.push({ src: "yahoo", t: s.yahoo });
-  cands.push({ src: "stooq", t: s.stooq || stooqSym(s.sym) });
+  const gex = s.google ? [s.google] : GOOGLE_EX[mkt].map((ex) => `${base}:${ex}`);
+  gex.forEach((g) => cands.push({ src: "google", t: g, mkt }));
+  cands.push({ src: "stooq", t: s.stooq || stooqSym(s.sym), mkt });
   try {
     const q = await quote(cands);
     const currency = s.sym.endsWith(".PL") ? "PLN" : (q.currency || "USD");
@@ -137,19 +199,21 @@ for (const s of watch.symbols) {
     failed.push(s.sym);
     log(`! ${s.sym}: ${e.message} – zostaje poprzedni kurs`);
   }
-  await sleep(300);
+  if (ok.includes(s.sym)) { const x = prices[s.sym]; log(`  ${s.sym}: ${x.price} ${x.currency} (${x.date}, ${x.source}${x.final ? ", zamknięcie" : ""})`); }
+  await sleep(200);
 }
 
 const bench = {}, benchCloses = {};
 const BENCH = {
-  spx: [{ src: "yahoo", t: "^GSPC" }, { src: "stooq", t: "^spx" }],
-  wig: [{ src: "stooq", t: "wig" }, { src: "yahoo", t: "WIG.WA" }]
+  spx: [{ src: "yahoo", t: "^GSPC" }, { src: "google", t: ".INX:INDEXSP", mkt: "US" }, { src: "stooq", t: "^spx", mkt: "US" }],
+  wig: [{ src: "yahoo", t: "WIG.WA" }, { src: "google", t: "WIG:WSE", mkt: "PL" }, { src: "stooq", t: "wig", mkt: "PL" }]
 };
 for (const k of Object.keys(BENCH)) {
   try {
     const q = await quote(BENCH[k]);
     bench[k] = { value: round(q.price, 2), date: q.date, final: q.final };
-    benchCloses[k] = q.closes.length ? q.closes : (q.source === "stooq" ? [{ date: q.date, close: q.price, maybeOpen: true }] : []);
+    benchCloses[k] = q.closes;
+    log(`  indeks ${k}: ${bench[k].value} (${q.date}, ${q.source})`);
   } catch (e) { log(`! indeks ${k}: ${e.message}`); }
 }
 
@@ -175,12 +239,8 @@ const touch = (date) => { if (!days.has(date)) days.set(date, { date, prices: {}
 for (const sym of Object.keys(closesBySym)) {
   for (const c of closesBySym[sym]) touch(c.date).prices[sym] = round(c.close);
 }
-// Stooq nie mówi, czy sesja się skończyła – zapisuję tylko po godzinie zamknięcia giełdy.
-const todayWarsaw = dayIn("Europe/Warsaw", Date.now() / 1000);
-const hourWarsaw = +new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Warsaw", hour: "2-digit", hour12: false }).format(new Date());
 for (const k of Object.keys(benchCloses)) {
   for (const c of benchCloses[k]) {
-    if (c.maybeOpen && c.date === todayWarsaw && hourWarsaw < (k === "wig" ? 18 : 23)) continue;
     const d = touch(c.date); d.bench = d.bench || {}; d.bench[k] = round(c.close, 2);
   }
 }
