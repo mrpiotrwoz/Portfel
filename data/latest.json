@@ -205,8 +205,8 @@
   }
  ],
  "fx": {
-  "EUR": 4.4165,
-  "USD": 4.0176
+  "USD": 4.0613,
+  "EUR": 4.4559
  },
  "items": {
   "AAPL.US": {
@@ -711,44 +711,68 @@
  "newsUpdatedAt": "2026-11-20T08:49:51Z",
  "prices": {
   "AAPL.US": {
+   "price": 342.56,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 349.21
+   "date": "2026-11-20",
+   "prevClose": 349.21,
+   "final": true,
+   "source": "cnbc"
   },
   "AMD.US": {
+   "price": 424.39,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 489.19
+   "date": "2026-11-20",
+   "prevClose": 489.19,
+   "final": true,
+   "source": "cnbc"
   },
   "ASB.PL": {
+   "price": 148,
    "currency": "PLN",
    "date": "2026-11-20",
-   "price": 152.9
+   "prevClose": null,
+   "final": true,
+   "source": "biznesradar"
   },
   "ASTS.US": {
+   "price": 23.27,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 25.55
+   "date": "2026-11-20",
+   "prevClose": 25.55,
+   "final": true,
+   "source": "cnbc"
   },
   "BFT.PL": {
+   "price": 6250,
    "currency": "PLN",
    "date": "2026-11-20",
-   "price": 6320
+   "prevClose": null,
+   "final": true,
+   "source": "biznesradar"
   },
   "CMPS.US": {
+   "price": 8.05,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 8.65
+   "date": "2026-11-20",
+   "prevClose": 8.65,
+   "final": true,
+   "source": "cnbc"
   },
   "CRI.PL": {
+   "price": 658,
    "currency": "PLN",
    "date": "2026-11-20",
-   "price": 677
+   "prevClose": null,
+   "final": true,
+   "source": "biznesradar"
   },
   "CRQ.PL": {
+   "price": 148,
    "currency": "PLN",
    "date": "2026-11-20",
-   "price": 160.45
+   "prevClose": null,
+   "final": true,
+   "source": "biznesradar"
   },
   "CYBN.US": {
    "currency": "USD",
@@ -756,70 +780,123 @@
    "price": 6.78
   },
   "DFTX.US": {
+   "price": 28.34,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 29.48
+   "date": "2026-11-20",
+   "prevClose": 29.48,
+   "final": true,
+   "source": "cnbc"
   },
   "FIX.US": {
+   "price": 1042.47,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 1114.02
+   "date": "2026-11-20",
+   "prevClose": 1114.02,
+   "final": true,
+   "source": "cnbc"
   },
   "GHRS.US": {
+   "price": 17.53,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 18.56
+   "date": "2026-11-20",
+   "prevClose": 18.56,
+   "final": true,
+   "source": "cnbc"
   },
   "JOBY.US": {
+   "price": 3.6,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 3.93
+   "date": "2026-11-20",
+   "prevClose": 3.93,
+   "final": true,
+   "source": "cnbc"
   },
   "LUNR.US": {
+   "price": 8.78,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 9.78
+   "date": "2026-11-20",
+   "prevClose": 9.78,
+   "final": true,
+   "source": "cnbc"
   },
   "MU.US": {
+   "price": 594.51,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 690.44
+   "date": "2026-11-20",
+   "prevClose": 690.44,
+   "final": true,
+   "source": "cnbc"
   },
   "OKLO.US": {
+   "price": 19.85,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 20.84
+   "date": "2026-11-20",
+   "prevClose": 20.84,
+   "final": true,
+   "source": "cnbc"
   },
   "PWR.US": {
+   "price": 559.03,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 587.43
+   "date": "2026-11-20",
+   "prevClose": 587.43,
+   "final": true,
+   "source": "cnbc"
   },
   "RKLB.US": {
+   "price": 45.42,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 50.99
+   "date": "2026-11-20",
+   "prevClose": 50.99,
+   "final": true,
+   "source": "cnbc"
   },
   "S2B.PL": {
+   "price": 51,
    "currency": "PLN",
    "date": "2026-11-20",
-   "price": 52.98
+   "prevClose": null,
+   "final": true,
+   "source": "biznesradar"
   },
   "SNT.PL": {
+   "price": 307,
    "currency": "PLN",
    "date": "2026-11-20",
-   "price": 308.2
+   "prevClose": null,
+   "final": true,
+   "source": "biznesradar"
   },
   "TMDX.US": {
+   "price": 85.25,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 94.02
+   "date": "2026-11-20",
+   "prevClose": 94.02,
+   "final": true,
+   "source": "cnbc"
   },
   "VLTO.US": {
+   "price": 116.63,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 116.08
+   "date": "2026-11-20",
+   "prevClose": 116.08,
+   "final": true,
+   "source": "cnbc"
   }
  },
- "updatedAt": "2026-11-20T08:49:51Z"
+ "updatedAt": "2026-11-21T09:52:05.035Z",
+ "bench": {
+  "spx": {
+   "value": 6910.39,
+   "date": "2026-11-20",
+   "final": true
+  },
+  "wig": {
+   "value": 151743,
+   "date": "2026-11-20",
+   "final": true
+  }
+ },
+ "fxDate": "2026-11-20",
+ "source": "github-actions"
 }
