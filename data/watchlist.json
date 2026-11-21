@@ -57,8 +57,16 @@
   },
   {
    "sym": "CYBN.US",
-   "name": "Cybin",
-   "yahoo": "CYBN"
+   "name": "Helus Pharma (dawniej Cybin)",
+   "yahoo": "HELP",
+   "cnbc": "HELP",
+   "google": "HELP:NASDAQ",
+   "stooq": "help.us"
+  },
+  {
+   "sym": "HELP.US",
+   "name": "Helus Pharma",
+   "yahoo": "HELP"
   },
   {
    "sym": "TMDX.US",

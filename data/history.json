@@ -217,7 +217,8 @@
     "S2B.PL": 55.4,
     "SNT.PL": 316,
     "TMDX.US": 94.02,
-    "VLTO.US": 116.08
+    "VLTO.US": 116.08,
+    "HELP.US": 6.78
    }
   },
   {
@@ -238,16 +239,18 @@
     "ASTS.US": 23.27,
     "JOBY.US": 3.6,
     "OKLO.US": 19.85,
-    "SNT.PL": 307,
+    "SNT.PL": 307.8,
     "BFT.PL": 6250,
     "CRI.PL": 658,
-    "S2B.PL": 51,
-    "ASB.PL": 148,
-    "CRQ.PL": 148
+    "S2B.PL": 51.1,
+    "ASB.PL": 148.6,
+    "CRQ.PL": 148,
+    "CYBN.US": 6.11,
+    "HELP.US": 6.11
    },
    "bench": {
     "spx": 6910.39,
-    "wig": 151743
+    "wig": 151743.67
    },
    "fx": {
     "USD": 4.0613,

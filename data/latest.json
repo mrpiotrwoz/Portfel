@@ -727,10 +727,10 @@
    "source": "cnbc"
   },
   "ASB.PL": {
-   "price": 148,
+   "price": 148.6,
    "currency": "PLN",
    "date": "2026-11-20",
-   "prevClose": null,
+   "prevClose": 167.1,
    "final": true,
    "source": "biznesradar"
   },
@@ -746,7 +746,7 @@
    "price": 6250,
    "currency": "PLN",
    "date": "2026-11-20",
-   "prevClose": null,
+   "prevClose": 5905,
    "final": true,
    "source": "biznesradar"
   },
@@ -762,7 +762,7 @@
    "price": 658,
    "currency": "PLN",
    "date": "2026-11-20",
-   "prevClose": null,
+   "prevClose": 698,
    "final": true,
    "source": "biznesradar"
   },
@@ -770,14 +770,17 @@
    "price": 148,
    "currency": "PLN",
    "date": "2026-11-20",
-   "prevClose": null,
+   "prevClose": 167.2,
    "final": true,
    "source": "biznesradar"
   },
   "CYBN.US": {
+   "price": 6.11,
    "currency": "USD",
-   "date": "2026-11-19",
-   "price": 6.78
+   "date": "2026-11-20",
+   "prevClose": 6.78,
+   "final": true,
+   "source": "cnbc"
   },
   "DFTX.US": {
    "price": 28.34,
@@ -852,18 +855,18 @@
    "source": "cnbc"
   },
   "S2B.PL": {
-   "price": 51,
+   "price": 51.1,
    "currency": "PLN",
    "date": "2026-11-20",
-   "prevClose": null,
+   "prevClose": 55.4,
    "final": true,
    "source": "biznesradar"
   },
   "SNT.PL": {
-   "price": 307,
+   "price": 307.8,
    "currency": "PLN",
    "date": "2026-11-20",
-   "prevClose": null,
+   "prevClose": 316,
    "final": true,
    "source": "biznesradar"
   },
@@ -882,6 +885,14 @@
    "prevClose": 116.08,
    "final": true,
    "source": "cnbc"
+  },
+  "HELP.US": {
+   "price": 6.11,
+   "currency": "USD",
+   "date": "2026-11-20",
+   "prevClose": 6.78,
+   "final": true,
+   "source": "cnbc"
   }
  },
  "updatedAt": "2026-11-21T09:52:05.035Z",
@@ -892,7 +903,7 @@
    "final": true
   },
   "wig": {
-   "value": 151743,
+   "value": 151743.67,
    "date": "2026-11-20",
    "final": true
   }
