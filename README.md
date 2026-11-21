@@ -21,7 +21,7 @@ Twoje ilości akcji, koszty i wpłaty **nie trafiają do repozytorium**. Strona 
    - Na Macu folder `.github` jest ukryty. W Finderze naciśnij `Cmd + Shift + .`, żeby go zobaczyć.
 4. **Settings → Pages**: Source **Deploy from a branch**, Branch **main**, folder **/ (root)**, **Save**. Po 1–2 minutach strona będzie pod adresem `https://TWOJ-LOGIN.github.io/portfel/`.
 5. **Settings → Actions → General → Workflow permissions**: zaznacz **Read and write permissions**, **Save**. Bez tego skrypt nie zapisze kursów.
-6. Pierwsze pobranie: **Actions → Kursy → Run workflow**. Po minucie wejdź w uruchomienie i sprawdź log kroku „Pobierz kursy”. Na końcu powinno być `Odświeżono 22/22 kursów`.
+6. Pierwsze pobranie: **Actions → Kursy → Run workflow**. Po minucie wejdź w uruchomienie i sprawdź log kroku „Pobierz kursy”. Na końcu powinno być `Odświeżono 23/23 kursów`.
 
 ## Na iPhonie i iPadzie
 
@@ -41,6 +41,8 @@ Twoje ilości akcji, koszty i wpłaty **nie trafiają do repozytorium**. Strona 
 ## Dodanie lub usunięcie spółki
 
 Edytuj `data/watchlist.json` na GitHubie (ikona ołówka). Każda spółka ma pola `sym` (symbol XTB, np. `CDR.PL`), `name` i `yahoo` (symbol Yahoo: spółki z USA bez końcówki, np. `MSFT`, polskie z `.WA`, np. `CDR.WA`). Strona sama podpowie, dla których spółek brakuje kursów.
+
+Gdy spółka zmieni nazwę lub ticker, a XTB dalej pokazuje stary symbol, zostaw stary `sym` i dopisz nowe symbole źródeł: `cnbc` (np. `HELP`), `google` (np. `HELP:NASDAQ`), `stooq` (np. `help.us`) i `yahoo`. Tak jest ustawiony Cybin (`CYBN.US`), który od stycznia 2026 notowany jest jako Helus Pharma (`HELP`).
 
 ## Dobrze wiedzieć
 
