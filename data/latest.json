@@ -1,0 +1,825 @@
+{
+ "dividends": [
+  {
+   "currency": "USD",
+   "exDate": "2026-11-12",
+   "payDate": "2026-11-23",
+   "perShare": 1,
+   "source": "https://www.sec.gov/Archives/edgar/data/0001035983/000110465926118156/fix-ex99d2.htm",
+   "status": "declared",
+   "sym": "FIX.US"
+  },
+  {
+   "currency": "USD",
+   "exDate": "2026-12-31",
+   "perShare": 0.13,
+   "source": "https://quantisnow.com/dividends/VLTO",
+   "status": "estimated",
+   "sym": "VLTO.US"
+  },
+  {
+   "currency": "USD",
+   "exDate": "2027-01-04",
+   "payDate": "2027-01-13",
+   "perShare": 0.13,
+   "source": "https://finviz.com/news/423814/quanta-services-announces-quarterly-cash-dividend",
+   "status": "declared",
+   "sym": "PWR.US"
+  },
+  {
+   "currency": "USD",
+   "exDate": "2027-01-04",
+   "perShare": 0.15,
+   "source": "https://www.sec.gov/Archives/edgar/data/0000723125/000072312526000018/a2026q4ex991-pressrelease.htm",
+   "status": "estimated",
+   "sym": "MU.US"
+  },
+  {
+   "currency": "USD",
+   "exDate": "2026-11-13",
+   "payDate": "2026-11-26",
+   "perShare": 0.35,
+   "source": "https://investor.asbis.com/news/current-reports/current-report-25-2026",
+   "status": "declared",
+   "sym": "ASB.PL"
+  }
+ ],
+ "events": [
+  {
+   "confirmed": true,
+   "date": "2026-11-26",
+   "source": "https://investor.asbis.com/news/current-reports/current-report-25-2026",
+   "sym": "ASB.PL",
+   "title": "Wypłata zaliczki na dywidendę 0,35 USD na akcję",
+   "type": "inne"
+  },
+  {
+   "confirmed": false,
+   "date": "2026-11-26",
+   "source": "https://www.biznesradar.pl/notowania/CRI",
+   "sym": "CRI.PL",
+   "title": "Raport za III kw. 2026",
+   "type": "wyniki"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-11-30",
+   "source": "https://www.biznesradar.pl/a/167655,benefit-systems-sa-48-2026-rezygnacja-czlonka-rady-nadzorczej",
+   "sym": "BFT.PL",
+   "title": "Wejście w życie rezygnacji wiceprzewodniczącego rady nadzorczej",
+   "type": "inne"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-11-30",
+   "source": "https://www.stockwatch.pl/komunikaty-spolek/crquantum,terminy-przekazywania-raportow-okresowych-w-2-2026-04-24,espi,20260424_115231_0000346224",
+   "sym": "CRQ.PL",
+   "title": "Raport za III kw. 2026",
+   "type": "wyniki"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-01",
+   "source": "https://stockanalysis.com/stocks/cmps/",
+   "sym": "CMPS.US",
+   "title": "Udział w konferencji Evercore Healthcare",
+   "type": "inne"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-01",
+   "source": "https://www.biznesradar.pl/a/168093,creotech-instruments-sa-59-2026-zadanie-akcjonariusza-umieszczenia-okreslonej-sprawy-w-porzadku-obrad-nadzwyczajnego-walnego-zgromadzenia-wraz-z-projektami-uchwal",
+   "sym": "CRI.PL",
+   "title": "NWZ: przeniesienie części przedsiębiorstwa do spółki zależnej, zmiany statutu, zmiany w RN",
+   "type": "walne"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-01",
+   "source": "https://finviz.com/news/412251/transmedics-to-present-at-upcoming-investor-conferences",
+   "sym": "TMDX.US",
+   "title": "Wystąpienie na konferencji Piper Sandler Healthcare (Nowy Jork)",
+   "type": "inne"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-02",
+   "source": "https://investors.quantaservices.com/news-events/press-releases/detail/408/quanta-services-to-participate-in-institutional-investor-conferences-in-november-and-december",
+   "sym": "PWR.US",
+   "title": "Udział w konferencji UBS Global Industrials & Transportation",
+   "type": "inne"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-03",
+   "source": "https://www.biznesradar.pl/a/161785,syn2bio-sa-19-2026-terminy-publikacji-raportow-okresowych",
+   "sym": "S2B.PL",
+   "title": "Raport roczny za rok obrotowy 2025",
+   "type": "wyniki"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-15",
+   "source": "https://www.biznesradar.pl/a/170661,benefit-systems-sa-49-2026-zwolanie-na-zadanie-akcjonariusza-nadzwyczajnego-walnego-zgromadzenia-spolki",
+   "sym": "BFT.PL",
+   "title": "NWZ na żądanie Nationale-Nederlanden OFE (zmiana składu rady nadzorczej)",
+   "type": "walne"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-17",
+   "source": "https://stockanalysis.com/stocks/mu/",
+   "sym": "MU.US",
+   "title": "Wyniki za I kw. roku obrotowego 2027",
+   "type": "wyniki"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-20",
+   "source": "https://isbiznes.pl/2026/11/18/synektik-spodziewa-sie-wyplacic-wyzsza-dywidende-ale-uwzgledni-akwizycje/",
+   "sym": "SNT.PL",
+   "title": "Szczegóły dywidendy za rok obrotowy 2025/26",
+   "type": "inne",
+   "when": "druga dekada grudnia 2026"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-22",
+   "source": "https://www.biznesradar.pl/a/161773,synektik-sa-48-2026-terminy-publikacji-raportow-okresowych",
+   "sym": "SNT.PL",
+   "title": "Raport roczny za rok obrotowy 2025",
+   "type": "wyniki"
+  },
+  {
+   "confirmed": false,
+   "date": "2026-12-31",
+   "source": "https://thenextweb.com/news/apple-intelligence-china-ipad-mac-registration",
+   "sym": "AAPL.US",
+   "title": "Start Apple Intelligence w Chinach (iOS 27.3)",
+   "type": "produkt",
+   "when": "grudzień 2026"
+  },
+  {
+   "confirmed": false,
+   "date": "2026-12-31",
+   "source": "https://www.spacelaunchschedule.com/launch/falcon-9-block-5-bluebird-14-16-block-2-9-11/",
+   "sym": "ASTS.US",
+   "title": "Start satelitów BlueBird 14–16 (SpaceX) – spółka czeka na datę",
+   "type": "produkt",
+   "when": "grudzień 2026 (termin nieoficjalny)"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/0001780312/000119312526453758/asts-ex99_1.htm",
+   "sym": "ASTS.US",
+   "title": "Początkowa, nieciągła usługa ogólnokrajowa w USA i pierwsze uruchomienia u partnerów",
+   "type": "produkt",
+   "when": "do końca 2026"
+  },
+  {
+   "confirmed": true,
+   "date": "2026-12-31",
+   "source": "https://finance.yahoo.com/markets/stocks/articles/joby-aviation-inc-joby-q3-071157027.html",
+   "sym": "JOBY.US",
+   "title": "Operacyjne loty testowe z pilotem w sieci wertiportów w Dubaju",
+   "type": "produkt",
+   "when": "do końca 2026"
+  },
+  {
+   "confirmed": false,
+   "date": "2026-12-31",
+   "source": "https://www.bankier.pl/wiadomosc/Syn2bio-spodziewa-sie-w-IV-kw-wynikow-analizy-posredniej-badania-kardioznacznika-w-Europie-9182037.html",
+   "sym": "S2B.PL",
+   "title": "Oczekiwane wyniki analizy pośredniej europejskiego badania III fazy kardioznacznika",
+   "type": "badanie",
+   "when": "IV kw. 2026"
+  },
+  {
+   "confirmed": false,
+   "date": "2027-01-28",
+   "source": "https://www.wallstreethorizon.com/apple-earnings-calendar",
+   "sym": "AAPL.US",
+   "title": "Wyniki za I kw. roku obrotowego 2027 (termin szacowany)",
+   "type": "wyniki"
+  }
+ ],
+ "fx": {
+  "EUR": 4.4165,
+  "USD": 4.0176
+ },
+ "items": {
+  "AAPL.US": {
+   "news": [
+    {
+     "date": "2026-11-09",
+     "source": "The Next Web",
+     "title": "Apple Intelligence zarejestrowane w Chinach także dla iPadów i Maców; start funkcji na iPhone'ach planowany na grudzień",
+     "url": "https://thenextweb.com/news/apple-intelligence-china-ipad-mac-registration"
+    },
+    {
+     "date": "2026-11-10",
+     "source": "24/7 Wall St.",
+     "title": "Pierwsze zamknięcie kursu powyżej 350 USD, wycena przekracza 5 bln USD",
+     "url": "https://247wallst.com/investing/2026/11/10/apple-is-above-5-trillion-after-its-first-ever-close-above-350/"
+    },
+    {
+     "date": "2026-11-11",
+     "source": "The Stock Observer",
+     "title": "China Renaissance podnosi rekomendację dla Apple, cena docelowa 425 USD",
+     "url": "https://www.thestockobserver.com/2026/11/11/apple-nasdaqaapl-sets-new-52-week-high-on-analyst-upgrade.html"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 akcje zamknęły się 0,9% niżej, na 349,21 USD. Media (Bloomberg, TechCrunch) piszą, że Apple rozbudowuje zespół budujący własnego agenta AI działającego na Macu, a brytyjski trybunał podtrzymał rządowy nakaz dostępu do danych Apple; członek rady sprzedał akcje za ok. 31 mln USD. To na razie wiadomości neutralne."
+  },
+  "AMD.US": {
+   "news": [
+    {
+     "date": "2026-11-19",
+     "source": "CNBC",
+     "title": "Raport Hunterbrook: pozycja krótka na AMD i zarzuty o powiązania z Chinami",
+     "url": "https://www.cnbc.com/2026/11/19/amd-falls-on-short-seller-report-of-alleged-china-exposure.html"
+    },
+    {
+     "date": "2026-11-19",
+     "source": "The Motley Fool",
+     "title": "Po Nvidii krótki sprzedawca bierze pod lupę chiński biznes AMD",
+     "url": "https://www.fool.com/investing/2026/11/19/first-nvidia-now-amd-a-short-seller-just-put-its-china-business-under-the-microscope/"
+    },
+    {
+     "date": "2026-11-19",
+     "source": "GuruFocus",
+     "title": "Akcje AMD tracą po ujawnieniu pozycji krótkiej Hunterbrook",
+     "url": "https://www.gurufocus.com/news/9210647/amd-shares-slide-amid-hunterbrook-capital-short-position-over-china-sales-concerns-ticker-amd"
+    }
+   ],
+   "signal": "red",
+   "summary": "19.11 akcje spadły o 7,7% do 489,19 USD (w trakcie sesji nawet ok. 11%) po raporcie Hunterbrook Capital, które ujawniło pozycję krótką i zarzuca, że oprogramowanie AMD trafiło do chińskiego producenta serwerów z czarnej listy USA. AMD mówi, że raport przedstawia jego praktyki błędnie; ryzyko to ewentualna kontrola regulatorów w USA i dalsza wyprzedaż sektora (kancelarie zapowiadają też postępowania w imieniu akcjonariuszy)."
+  },
+  "ASB.PL": {
+   "news": [
+    {
+     "date": "2026-11-10",
+     "source": "BiznesRadar",
+     "title": "Nagranie spotkania z zarządem po wynikach III kw. 2026",
+     "url": "https://www.biznesradar.pl/a/167682"
+    },
+    {
+     "date": "2026-11-05",
+     "source": "Parkiet",
+     "title": "Zyski III kw. powyżej prognoz analityków, marża brutto spadła do ok. 6,2% (kontekst)",
+     "url": "https://www.parkiet.com/handel-i-konsumpcja/art45449211-zyski-asbisu-wyzsze-od-prognoz-analityk-znaczaco-podniosl-cene-docelowa-akcji"
+    },
+    {
+     "date": "2026-11-04",
+     "source": "Asbis IR (ESPI)",
+     "title": "Uchwała o zaliczce 0,35 USD na akcję: dzień ustalenia prawa 16.11, wypłata 26.11 (RB 25/2026)",
+     "url": "https://investor.asbis.com/news/current-reports/current-report-25-2026"
+    }
+   ],
+   "signal": "gray",
+   "summary": "Dzisiaj rano kurs spada o ok. 8,5% (152,9 zł wobec 167,1 zł wczoraj), ale nie znalazłem żadnego nowego komunikatu spółki; wygląda na szeroką wyprzedaż na GPW i w sektorze technologicznym. Zaliczka na dywidendę 0,35 USD na akcję jest wypłacana 26.11 (odcięcie było 13.11)."
+  },
+  "ASTS.US": {
+   "news": [
+    {
+     "date": "2026-11-09",
+     "source": "SEC (komunikat spółki, 8-K)",
+     "title": "Wyniki III kw. 2026: przychody 42,3 mln USD, strata 0,44 USD/akcję, prognoza roczna 150–200 mln USD utrzymana",
+     "url": "https://www.sec.gov/Archives/edgar/data/0001780312/000119312526453758/asts-ex99_1.htm"
+    },
+    {
+     "date": "2026-11-11",
+     "source": "GoTrade",
+     "title": "Kurs spada o ok. 8,7% po wynikach poniżej oczekiwań i przesunięciu celu 45 satelitów na połowę 2027 r.",
+     "url": "https://www.heygotrade.com/en/news/ast-spacemobile-asts-stock-news-november-11-2026/"
+    },
+    {
+     "date": "2026-11-10",
+     "source": "Seeking Alpha",
+     "title": "Spadek kursu po słabszych przychodach i zapowiedzi dużych nakładów inwestycyjnych",
+     "url": "https://seekingalpha.com/news/4670287-ast-spacemobile-falls-9-percent-amid-revenue-miss-heavy-capex-plans"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs zamknął się na 25,55 USD (+0,2%). B. Riley podniósł rekomendację do „Buy”, a media opisują akcje jako mocno przecenione po rozczarowujących wynikach z 9.11; samo to nie zmienia obrazu spółki."
+  },
+  "BFT.PL": {
+   "news": [
+    {
+     "date": "2026-11-20",
+     "source": "ISBiznes",
+     "title": "Zysk netto Benefit Systems w III kw. 2026 wzrósł o ok. 34% do 284 mln zł",
+     "url": "https://isbiznes.pl/2026/11/20/benefit-systems-mial-28435-mln-zl-zysku-netto-33741-mln-zl-zysku-ebit-w-iii-kw-2026-r/"
+    },
+    {
+     "date": "2026-11-19",
+     "source": "BiznesRadar",
+     "title": "Prezes: z optymizmem patrzymy na kolejne lata",
+     "url": "https://www.biznesradar.pl/a/171192,r-sokolowski-z-optymizmem-patrzymy-na-kolejne-lata-i-mozliwosci-dalszego-umacniania-pozycji-benefit-systems"
+    },
+    {
+     "date": "2026-11-18",
+     "source": "BiznesRadar (ESPI)",
+     "title": "Zwołanie NWZ na żądanie akcjonariusza (15 grudnia)",
+     "url": "https://www.biznesradar.pl/a/170661,benefit-systems-sa-49-2026-zwolanie-na-zadanie-akcjonariusza-nadzwyczajnego-walnego-zgromadzenia-spolki"
+    }
+   ],
+   "signal": "green",
+   "summary": "20.11 Benefit Systems podał wyniki za III kw. 2026: przychody 1,51 mld zł (+27% r/r), zysk operacyjny 337 mln zł (+41%) i zysk netto 284 mln zł (+34%), przy wzroście liczby kart MultiSport do 1,9 mln; kurs rośnie o ok. 7–8%. Tło: 18.11 zwołano NWZ na 15.12 na żądanie Nationale-Nederlanden OFE (zmiany w radzie nadzorczej)."
+  },
+  "CMPS.US": {
+   "news": [
+    {
+     "date": "2026-11-19",
+     "source": "Business Wire (via StockAnalysis)",
+     "title": "Compass Pathways na konferencji Evercore Healthcare 1 grudnia",
+     "url": "https://stockanalysis.com/stocks/cmps/"
+    },
+    {
+     "date": "2026-11-09",
+     "source": "Business Wire (via TT)",
+     "title": "Zakończono składanie wniosku NDA dla COMP360 w depresji lekoopornej",
+     "url": "https://via.tt.se/pressmeddelande/4633594/compass-pathways-completes-comp360-psilocybin-new-drug-application-to-us-fda-for-treatment-resistant-depression?publisherId=259167"
+    },
+    {
+     "date": "2026-11-03",
+     "source": "Finviz",
+     "title": "Wyniki za III kw. 2026: 444 mln USD gotówki, finansowanie do 2028 r., start sprzedaży celowany na I poł. 2027",
+     "url": "https://finviz.com/news/414440/compass-pathways-beats-on-a-warrant-driven-loss-as-the-comp360-nda-nears-the-finish-line-while-launch-costs-climb-and-the-stock-has-fallen-nearly-half-from-its-september-high"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs wzrósł o 6,5% do 8,65 USD; spółka zapowiedziała udział w konferencji Evercore 1.12. Nowych decyzji FDA nie było — złożony 9.11 wniosek NDA dla COMP360 czeka na ocenę."
+  },
+  "CRI.PL": {
+   "news": [
+    {
+     "date": "2026-11-10",
+     "source": "BiznesRadar (ESPI)",
+     "title": "Żądanie akcjonariusza: zmiany w składzie RN w porządku obrad NWZ (RB 59/2026)",
+     "url": "https://www.biznesradar.pl/a/168093,creotech-instruments-sa-59-2026-zadanie-akcjonariusza-umieszczenia-okreslonej-sprawy-w-porzadku-obrad-nadzwyczajnego-walnego-zgromadzenia-wraz-z-projektami-uchwal"
+    },
+    {
+     "date": "2026-11-04",
+     "source": "BiznesRadar (ESPI)",
+     "title": "Zwołanie NWZ na 1.12: przeniesienie części przedsiębiorstwa do spółki zależnej, zmiany statutu (RB 58/2026)",
+     "url": "https://www.biznesradar.pl/a/166557,creotech-instruments-sa-58-2026-ogloszenie-o-zwolaniu-nadzwyczajnego-walnego-zgromadzenia-creotech-instruments-s-a-na-dzien-1-grudnia-2026-r"
+    }
+   ],
+   "signal": "gray",
+   "summary": "Dziś rano kurs spada o ok. 3% (677 zł wobec 698 zł); nie znalazłem nowych komunikatów. Najbliższe punkty: NWZ 1.12 (przeniesienie części przedsiębiorstwa do spółki zależnej, zmiany w radzie nadzorczej) i raport za III kw. 26.11."
+  },
+  "CRQ.PL": {
+   "news": [
+    {
+     "date": "2026-11-12",
+     "source": "StockWatch",
+     "title": "Profil spółki z listą komunikatów; ostatnie z września, kolejny raport 30.11 (kontekst)",
+     "url": "https://www.stockwatch.pl/gpw/crquantum,notowania,wskazniki.aspx"
+    },
+    {
+     "date": "2026-09-25",
+     "source": "The Quantum Insider",
+     "title": "Przygotowania do komercjalizacji systemu QKD po projekcie eCAUSIS (kontekst)",
+     "url": "https://thequantuminsider.com/2026/09/25/creotech-quantum-qkd-system-commercialization/"
+    }
+   ],
+   "signal": "gray",
+   "summary": "Dziś rano kurs spada o ok. 4% (160,45 zł wobec 167,2 zł), a od wtorku traci łącznie kilkanaście procent; nie znalazłem nowych komunikatów spółki, ruch wygląda na zmienność całego rynku. Raport za III kw. zapowiedziany na 30.11."
+  },
+  "CYBN.US": {
+   "news": [
+    {
+     "date": "2026-11-16",
+     "source": "pharmaphorum",
+     "title": "Helus: akcje spadają mimo pozytywnego odczytu fazy 3 w depresji",
+     "url": "https://pharmaphorum.com/news/helus-shares-slide-psychedelic-readout-depression"
+    },
+    {
+     "date": "2026-11-16",
+     "source": "GlobeNewswire (via Finviz)",
+     "title": "Komunikat spółki: pozytywne wyniki główne fazy 3 APPROACH (HLP003)",
+     "url": "https://finviz.com/news/423001/helus-pharma-announces-positive-topline-results-from-phase-3-approach-study-evaluating-hlp003-as-adjunctive-treatment-in-major-depressive-disorder"
+    },
+    {
+     "date": "2026-11-16",
+     "source": "Finviz",
+     "title": "Akcje Helus tracą ponad 20% mimo osiągnięcia głównego celu badania",
+     "url": "https://finviz.com/news/423186/helus-pharma-shares-fall-21-despite-phase-3-hlp003-trial-meeting-primary-endpoint"
+    }
+   ],
+   "signal": "gray",
+   "summary": "Helus Pharma (dawniej Cybin) podał 16.11 wyniki głównego badania fazy 3 APPROACH dla HLP003: poprawa o 7,6 pkt w skali MADRS względem placebo po 6 tygodniach i remisja u 40% vs 15,5% pacjentów, ale pojawiły się 3 poważne zdarzenia niepożądane, w tym próba samobójcza, i kurs mocno spadł. Analitycy (Guggenheim, Canaccord) podnieśli ceny docelowe; drugie badanie rejestracyjne EMBRACE ma dać wyniki w 2027 r."
+  },
+  "DFTX.US": {
+   "news": [
+    {
+     "date": "2026-11-09",
+     "source": "BiopharmaWatch",
+     "title": "Wyniki za III kw. 2026: ok. 1,05 mld USD gotówki, strata netto 51 mln USD, NDA dla DT120 planowane na I poł. 2027",
+     "url": "https://www.biopharmawatch.com/news/DFTX/definium-therapeutics-q3-2026-results"
+    },
+    {
+     "date": "2026-11-09",
+     "source": "Panabee",
+     "title": "Omówienie raportu kwartalnego: koszty operacyjne wyższe o 58% r/r, finansowanie wystarcza do 2030 r.",
+     "url": "https://www.panabee.com/news/definium-therapeutics-earnings-q3-2026"
+    },
+    {
+     "date": "2026-11-09",
+     "source": "StockTitan",
+     "title": "Opcje motywacyjne na 269,8 tys. akcji dla dziesięciu nowych pracowników",
+     "url": "https://www.stocktitan.net/news/DFTX/"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs +1,2% do 29,48 USD. JPMorgan podniósł cenę docelową do 85 USD z 84 USD; spółka wystąpiła na konferencji Jefferies. Brak nowych danych klinicznych."
+  },
+  "FIX.US": {
+   "news": [
+    {
+     "date": "2026-10-22",
+     "source": "SEC (komunikat spółki)",
+     "title": "Kontekst: dywidenda kwartalna podniesiona do 1,00 USD, dzień ustalenia prawa 12 listopada, wypłata 23 listopada",
+     "url": "https://www.sec.gov/Archives/edgar/data/0001035983/000110465926118156/fix-ex99d2.htm"
+    },
+    {
+     "date": "2026-10-23",
+     "source": "TIKR",
+     "title": "Kontekst: kurs spadł o 11% po wynikach - zapowiedź emerytury CFO przyćmiła rekordowy portfel zamówień",
+     "url": "https://www.tikr.com/blog/comfort-systems-sinks-11-as-cfo-retirement-overshadows-record-backlog-and-relentless-demand"
+    },
+    {
+     "date": "2026-11-04",
+     "source": "Simply Wall St / Webull",
+     "title": "Kontekst: omówienie reakcji kursu po wynikach za III kw. i zmianie na stanowisku CFO",
+     "url": "https://www.webull.com/news/15862973159334912"
+    }
+   ],
+   "signal": "gray",
+   "summary": "17.11 spółka zwiększyła program skupu akcji do 1 mln sztuk, a Morgan Stanley rozpoczął pokrycie z rekomendacją „Overweight”; kurs 19.11 zamknął się na 1114 USD. Wiadomości lekko pozytywne, ale niewykraczające poza rutynę. Dywidenda 1,00 USD płatna 23.11."
+  },
+  "GHRS.US": {
+   "news": [
+    {
+     "date": "2026-11-13",
+     "source": "Finviz / GlobeNewswire",
+     "title": "Wyniki III kw. 2026 i plan badania rejestracyjnego GH001",
+     "url": "https://finviz.com/news/422538/gh-research-reports-third-quarter-2026-financial-results-and-provides-business-update"
+    },
+    {
+     "date": "2026-11-04",
+     "source": "Investing.com",
+     "title": "Zapowiedź raportu za III kw.: rynek oczekiwał publikacji 5 listopada i startu fazy 3 pod koniec 2026 r.",
+     "url": "https://za.investing.com/news/stock-market-news/gh-research-set-to-report-earnings-amid-phase-3-preparation-push-93CH-4551611"
+    },
+    {
+     "date": "2026-08-06",
+     "source": "GH Research",
+     "title": "Raport za II kw. 2026: 362,7 mln USD gotówki, FDA oceniła plany CMC i urządzenia jako gotowe do fazy 3",
+     "url": "https://ghres.gcs-web.com/news-releases/news-release-details/gh-research-reports-second-quarter-2026-financial-results-and"
+    }
+   ],
+   "signal": "gray",
+   "summary": "Guggenheim podniósł cenę docelową do 46 USD, a H.C. Wainwright obniżył do 55 USD (obie przy rekomendacji „Buy”); kurs 19.11 zamknął się na 18,56 USD. Nowych danych klinicznych brak (wyniki za III kw. były 13.11)."
+  },
+  "JOBY.US": {
+   "news": [
+    {
+     "date": "2026-11-12",
+     "source": "Yahoo Finance",
+     "title": "Spadek akcji Joby w szerszej wyprzedaży spółek wzrostowych, bez konkretnej przyczyny po stronie spółki",
+     "url": "https://finance.yahoo.com/markets/stocks/articles/archer-aviation-slides-6-despite-165216087.html"
+    },
+    {
+     "date": "2026-11-04",
+     "source": "Joby Aviation",
+     "title": "Wyniki III kw. 2026: przychody 55 mln USD, wyższa prognoza roczna, piąty (ostatni) etap certyfikacji FAA",
+     "url": "https://www.jobyaviation.com/news/joby-reports-third-quarter-2026-financial-results"
+    },
+    {
+     "date": "2026-11-04",
+     "source": "Joby Aviation",
+     "title": "Kontrakty na loty autonomiczne z US Air Force (AFWERX) rozszerzone do blisko 37 mln USD",
+     "url": "https://www.jobyaviation.com/news/joby-expands-autonomous-flight-contracts-with-us-air-force-to-nearly-37-million-following-record-coast-to-coast-tour"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs spadł o 6,2% do 3,93 USD, razem z innymi spółkami lotnictwa elektrycznego (Archer); nie znalazłem komunikatu spółki, który tłumaczyłby ruch."
+  },
+  "LUNR.US": {
+   "news": [
+    {
+     "date": "2026-11-12",
+     "source": "GlobeNewswire (komunikat spółki)",
+     "title": "Rekordowe wyniki III kw. 2026: przychody 269 mln USD, backlog 1,87 mld USD, dodatni wolny przepływ gotówki",
+     "url": "https://www.globenewswire.com/news-release/2026/11/12/3401478/0/en/intuitive-machines-reports-third-quarter-2026-financial-results-reports-record-financials-across-the-board-revenue-profitability-positive-cash-flow-and-backlog.html"
+    },
+    {
+     "date": "2026-11-12",
+     "source": "GuruFocus",
+     "title": "Omówienie wyników III kw.: przychody 269 mln USD, strata netto kilka mln USD",
+     "url": "https://www.gurufocus.com/news/9194426/intuitive-machines-inc-reports-q3-2026-revenue-of-269-million-net-loss-of-402-million-exceeds-estimates"
+    },
+    {
+     "date": "2026-11-09",
+     "source": "Intuitive Machines IR",
+     "title": "Spółka wybrana do kontraktu ramowego NASA CLPS 2 na dostawy księżycowe",
+     "url": "https://investors.intuitivemachines.com/news-releases"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs −3,4% do 9,78 USD. W ostatnich dniach kilku analityków (Canaccord, Macquarie, Clear Street, Roth) obniżyło ceny docelowe po wynikach z 12.11; nie ma nowych kontraktów ani komunikatów spółki."
+  },
+  "MU.US": {
+   "news": [
+    {
+     "date": "2026-11-19",
+     "source": "GlobeNewswire (via StockAnalysis)",
+     "title": "Micron opublikuje wyniki za I kw. FY2027 17 grudnia",
+     "url": "https://stockanalysis.com/stocks/mu/"
+    },
+    {
+     "date": "2026-11-11",
+     "source": "GuruFocus / TradingView",
+     "title": "Micron rośnie ponad 11% - odbicie spółek pamięci i informacja o inwestycji 1 mld USD w Anthropic",
+     "url": "https://www.tradingview.com/news/gurufocus:68a6b269d094b:0-micron-stocks-jump-11-2-as-memory-rebound-meets-1-billion-anthropic-placement/"
+    },
+    {
+     "date": "2026-11-11",
+     "source": "Gotrade",
+     "title": "10 listopada kurs spadł o 1,1% po wyższym od prognoz odczycie inflacji CPI w USA",
+     "url": "https://www.heygotrade.com/en/news/micron-mu-stock-news-november-11-2026/"
+    }
+   ],
+   "signal": "gray",
+   "summary": "Micron potwierdził, że wyniki za I kw. roku obrotowego 2027 opublikuje 17.12. 19.11 kurs spadł o 2,1% do 690,44 USD, a po sesji tracił dalej; media wskazują na słabość sektora AI i półprzewodników oraz zapowiedź spółki, że niedobór pamięci potrwa do 2028 r."
+  },
+  "OKLO.US": {
+   "news": [
+    {
+     "date": "2026-11-11",
+     "source": "Stocktwits",
+     "title": "DOE dopuszcza reaktor Groves-1 do pracy bez ograniczeń; kurs rośnie o ponad 6%",
+     "url": "https://stocktwits.com/news-articles/markets/equity/oklo-gets-final-doe-operational-clearance-for-groves-1-reactor/cNGDAS4R9Bp"
+    },
+    {
+     "date": "2026-11-11",
+     "source": "MarketScreener",
+     "title": "Akcje w górę po zgodzie DOE na badania i demonstracje w reaktorze testowym",
+     "url": "https://www.marketscreener.com/news/oklo-shares-gain-on-doe-clearance-to-begin-research-demonstration-at-isotope-test-reactor-ce785edbdc80f423"
+    },
+    {
+     "date": "2026-11-06",
+     "source": "Finviz / Earnings Whispers",
+     "title": "Wyniki III kw.: mniejsza strata od oczekiwań, ale Aurora przesunięta na 2028–2029 i wycofany wniosek przyłączeniowy w PJM",
+     "url": "https://finviz.com/news/418461/oklo-narrows-its-loss-against-expectations-but-an-aurora-slip-and-pjm-setback-overshadow-construction-progress"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs −4,4% do 20,84 USD; nowych komunikatów spółki nie ma. W tle: 13.11 Oklo i Centrus zabezpieczyli dostawy paliwa dla elektrowni Aurora w Ohio, a po wynikach kilku analityków mocno obniżyło ceny docelowe."
+  },
+  "PWR.US": {
+   "news": [
+    {
+     "date": "2026-11-17",
+     "source": "PR Newswire (via Finviz)",
+     "title": "Quanta Services ogłasza kwartalną dywidendę 0,13 USD (wzrost o ok. 18%)",
+     "url": "https://finviz.com/news/423814/quanta-services-announces-quarterly-cash-dividend"
+    },
+    {
+     "date": "2026-11-10",
+     "source": "Quanta Services IR",
+     "title": "Quanta zapowiada udział w konferencjach inwestorskich w listopadzie i grudniu",
+     "url": "https://investors.quantaservices.com/news-events/press-releases/detail/408/quanta-services-to-participate-in-institutional-investor-conferences-in-november-and-december"
+    },
+    {
+     "date": "2026-11-09",
+     "source": "Zacks",
+     "title": "Analiza: rekordowy portfel zamówień 63,7 mld USD (+63% r/r) wspiera prace przesyłowe",
+     "url": "https://www.zacks.com/stock/news/3026237/can-utility-infrastructure-spending-boost-quantas-transmission-work"
+    }
+   ],
+   "signal": "gray",
+   "summary": "17.11 Quanta podniosła kwartalną dywidendę o ok. 18% do 0,13 USD na akcję (odcięcie 4.01.2027, wypłata 13.01.2027); Morgan Stanley rozpoczął pokrycie z rekomendacją „Equal Weight”. Kurs 19.11: 587,43 USD."
+  },
+  "RKLB.US": {
+   "news": [
+    {
+     "date": "2026-11-09",
+     "source": "SEC (komunikat spółki, 8-K)",
+     "title": "Wyniki III kw. 2026: rekordowe przychody 267,8 mln USD, backlog ok. 3,6 mld USD, prognoza IV kw. 270–290 mln USD",
+     "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000073/rklb-11092026ex991.htm"
+    },
+    {
+     "date": "2026-11-10",
+     "source": "FinanceFeeds",
+     "title": "Kurs po wynikach w dół: przychody powyżej konsensusu, ale większa strata na akcję i brak daty startu Neutrona",
+     "url": "https://financefeeds.com/rocket-lab-rklb-stock-55-tuesday-after-q3-beat-neutron-2027-backlog-3-57-billion-bull-64-bear-46/"
+    },
+    {
+     "date": "2026-11-11",
+     "source": "SpaceQ",
+     "title": "Neutron: wymieniona kopuła zbiornika, testy zbiornika mają potrwać do I kw. 2027; przejęcie Iridium czeka na zgody regulatorów",
+     "url": "https://spaceq.ca/rocket-lab-q3-2026-neutron/"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs −3,9% do 50,99 USD, bez nowego komunikatu spółki; komentatorzy wracają do mieszanych wyników z 9.11 i milestone'u 100. startu rakiety Electron."
+  },
+  "S2B.PL": {
+   "news": [
+    {
+     "date": "2026-11-05",
+     "source": "BiznesRadar (ESPI)",
+     "title": "Powiadomienie o transakcji na akcjach osoby blisko związanej z członkinią RN (RB 20/2026; kontekst)",
+     "url": "https://www.biznesradar.pl/a/166689,syn2bio-sa-20-2026-powiadomienie-o-transakcjach-na-akcjach-spolki"
+    },
+    {
+     "date": "2026-10-15",
+     "source": "BiznesRadar (ESPI)",
+     "title": "Harmonogram raportów okresowych na rok obrotowy 2026 (RB 19/2026)",
+     "url": "https://www.biznesradar.pl/a/161785,syn2bio-sa-19-2026-terminy-publikacji-raportow-okresowych"
+    }
+   ],
+   "signal": "gray",
+   "summary": "Dziś rano kurs spada o ok. 4% (52,98 zł wobec 55,4 zł); od ostatniego raportu bieżącego (5.11, transakcje osób blisko związanych) nie ma nowych komunikatów. Raport roczny zapowiedziany na 3.12."
+  },
+  "SNT.PL": {
+   "news": [
+    {
+     "date": "2026-11-18",
+     "source": "ISBiznes",
+     "title": "Zysk Synektika w IV kw. roku obrotowego 2025/26 spadł rok do roku",
+     "url": "https://isbiznes.pl/2026/11/18/synektik-mial-2762-mln-zl-zysku-netto-z-dzial-kont-w-iv-kw-r-obr-2025-26/"
+    },
+    {
+     "date": "2026-11-18",
+     "source": "ISBiznes",
+     "title": "Zarząd chce utrzymać dywidendę, ale rozmowy o przejęciach mogą wpłynąć na jej wysokość",
+     "url": "https://isbiznes.pl/2026/11/18/synektik-spodziewa-sie-wyplacic-wyzsza-dywidende-ale-uwzgledni-akwizycje/"
+    },
+    {
+     "date": "2026-11-19",
+     "source": "Parkiet",
+     "title": "Synektik o planach rozwojowych i dywidendzie",
+     "url": "https://www.parkiet.com/medycyna-i-zdrowie/art45508111-synektik-o-planach-rozwojowych-i-dywidendzie"
+    }
+   ],
+   "signal": "gray",
+   "summary": "Dziś rano kurs spada o ok. 2,5% (308,2 zł wobec 316 zł) po wynikach z 18.11: rekordowy rok obrotowy (przychody 898,8 mln zł), ale słabszy IV kwartał (165,3 mln zł wobec 199,5 mln zł rok wcześniej). Zarząd zapowiada podobną lub wyższą nominalnie dywidendę (szczegóły w drugiej dekadzie grudnia)."
+  },
+  "TMDX.US": {
+   "news": [
+    {
+     "date": "2026-11-05",
+     "source": "PR Newswire (via Finviz)",
+     "title": "Wyniki za III kw. 2026: przychody 203 mln USD (+41% r/r), prognoza roczna podniesiona do 764-774 mln USD",
+     "url": "https://finviz.com/news/417594/transmedics-reports-third-quarter-2026-financial-results"
+    },
+    {
+     "date": "2026-10-29",
+     "source": "PR Newswire (via Finviz)",
+     "title": "Harmonogram konferencji inwestorskich: Stifel 10.11, Jefferies 17.11, Piper Sandler 1.12",
+     "url": "https://finviz.com/news/412251/transmedics-to-present-at-upcoming-investor-conferences"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs −2,5% do 94,02 USD. Pojawiły się ogłoszenia kancelarii o zbieraniu poszkodowanych akcjonariuszy (zarzut naruszenia obowiązków przez zarząd) — to zapowiedź ewentualnych roszczeń, nie wyrok ani pozew spółki; poza tym brak nowych komunikatów."
+  },
+  "VLTO.US": {
+   "news": [
+    {
+     "date": "2026-11-10",
+     "source": "Investing.com",
+     "title": "Zgłoszenie Form 144 - planowana sprzedaż akcji przez insidera (brak szczegółów)",
+     "url": "https://ca.investing.com/news/stock-market-news/form-144-veralto-corp-for-10-november-93CH-4947700"
+    },
+    {
+     "date": "2026-10-29",
+     "source": "SEC (komunikat spółki)",
+     "title": "Kontekst: wyniki za III kw. 2026 i podniesiona prognoza roczna",
+     "url": "https://www.sec.gov/Archives/edgar/data/0001967680/000196768026000047/vlto-20261029xex991.htm"
+    }
+   ],
+   "signal": "gray",
+   "summary": "19.11 kurs −1,5% do 116,08 USD; od wyników z 29.10 (powyżej konsensusu) nie ma nowych istotnych informacji, a kilku analityków podniosło wcześniej ceny docelowe."
+  }
+ },
+ "newsUpdatedAt": "2026-11-20T08:49:51Z",
+ "prices": {
+  "AAPL.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 349.21
+  },
+  "AMD.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 489.19
+  },
+  "ASB.PL": {
+   "currency": "PLN",
+   "date": "2026-11-20",
+   "price": 152.9
+  },
+  "ASTS.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 25.55
+  },
+  "BFT.PL": {
+   "currency": "PLN",
+   "date": "2026-11-20",
+   "price": 6320
+  },
+  "CMPS.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 8.65
+  },
+  "CRI.PL": {
+   "currency": "PLN",
+   "date": "2026-11-20",
+   "price": 677
+  },
+  "CRQ.PL": {
+   "currency": "PLN",
+   "date": "2026-11-20",
+   "price": 160.45
+  },
+  "CYBN.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 6.78
+  },
+  "DFTX.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 29.48
+  },
+  "FIX.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 1114.02
+  },
+  "GHRS.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 18.56
+  },
+  "JOBY.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 3.93
+  },
+  "LUNR.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 9.78
+  },
+  "MU.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 690.44
+  },
+  "OKLO.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 20.84
+  },
+  "PWR.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 587.43
+  },
+  "RKLB.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 50.99
+  },
+  "S2B.PL": {
+   "currency": "PLN",
+   "date": "2026-11-20",
+   "price": 52.98
+  },
+  "SNT.PL": {
+   "currency": "PLN",
+   "date": "2026-11-20",
+   "price": 308.2
+  },
+  "TMDX.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 94.02
+  },
+  "VLTO.US": {
+   "currency": "USD",
+   "date": "2026-11-19",
+   "price": 116.08
+  }
+ },
+ "updatedAt": "2026-11-20T08:49:51Z"
+}

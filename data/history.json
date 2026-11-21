@@ -1,0 +1,224 @@
+{
+ "days": [
+  {
+   "bench": {
+    "wig": 158774.77
+   },
+   "date": "2026-11-10",
+   "fx": {
+    "EUR": 4.3895,
+    "USD": 3.9099
+   },
+   "prices": {
+    "ASB.PL": 164.9,
+    "BFT.PL": 5915,
+    "CRI.PL": 787,
+    "CRQ.PL": 194,
+    "S2B.PL": 61.96,
+    "SNT.PL": 329.2
+   }
+  },
+  {
+   "bench": {
+    "spx": 7619.38
+   },
+   "date": "2026-11-11",
+   "fx": {
+    "EUR": 4.3895,
+    "USD": 3.9099
+   },
+   "prices": {
+    "AAPL.US": 355.63,
+    "AMD.US": 552.9,
+    "ASTS.US": 36.62,
+    "CMPS.US": 9.3,
+    "CYBN.US": 9.39,
+    "DFTX.US": 34.47,
+    "FIX.US": 1161.63,
+    "GHRS.US": 19.25,
+    "JOBY.US": 5.88,
+    "LUNR.US": 12.18,
+    "MU.US": 811.3,
+    "OKLO.US": 25.86,
+    "PWR.US": 607.94,
+    "RKLB.US": 66.15,
+    "TMDX.US": 92.01,
+    "VLTO.US": 118.77
+   }
+  },
+  {
+   "bench": {
+    "spx": 7592.4,
+    "wig": 161443.34
+   },
+   "date": "2026-11-12",
+   "fx": {
+    "EUR": 4.4018,
+    "USD": 3.9676
+   },
+   "prices": {
+    "AAPL.US": 354.88,
+    "AMD.US": 585.3,
+    "ASB.PL": 167.6,
+    "ASTS.US": 34.5,
+    "BFT.PL": 6220,
+    "CMPS.US": 9.12,
+    "CRI.PL": 758,
+    "CRQ.PL": 199.5,
+    "CYBN.US": 8.86,
+    "DFTX.US": 33,
+    "FIX.US": 1128.09,
+    "GHRS.US": 18.49,
+    "JOBY.US": 5.34,
+    "LUNR.US": 13.03,
+    "MU.US": 798.44,
+    "OKLO.US": 24.45,
+    "PWR.US": 606.16,
+    "RKLB.US": 64.07,
+    "S2B.PL": 62.7,
+    "SNT.PL": 335,
+    "TMDX.US": 92,
+    "VLTO.US": 117.49
+   }
+  },
+  {
+   "bench": {
+    "spx": 7561.67,
+    "wig": 161824.7
+   },
+   "date": "2026-11-13",
+   "fx": {
+    "EUR": 4.407,
+    "USD": 3.9852
+   },
+   "prices": {
+    "AAPL.US": 356.27,
+    "AMD.US": 534.06,
+    "ASB.PL": 164,
+    "ASTS.US": 32.6,
+    "BFT.PL": 6160,
+    "CMPS.US": 9.01,
+    "CRI.PL": 719,
+    "CRQ.PL": 196.9,
+    "CYBN.US": 8.87,
+    "DFTX.US": 32.08,
+    "FIX.US": 1112.5,
+    "GHRS.US": 19.1,
+    "JOBY.US": 5.08,
+    "LUNR.US": 13,
+    "MU.US": 778.31,
+    "OKLO.US": 23.92,
+    "PWR.US": 602.01,
+    "RKLB.US": 61.53,
+    "S2B.PL": 64,
+    "SNT.PL": 336.8,
+    "TMDX.US": 91.38,
+    "VLTO.US": 118.25
+   }
+  },
+  {
+   "bench": {
+    "wig": 161968.31
+   },
+   "date": "2026-11-16",
+   "fx": {
+    "EUR": 4.4048,
+    "USD": 4.0007
+   },
+   "prices": {
+    "AAPL.US": 352.78,
+    "AMD.US": 504.28,
+    "ASB.PL": 156.9,
+    "ASTS.US": 28.58,
+    "BFT.PL": 6250,
+    "CMPS.US": 8.27,
+    "CRI.PL": 710,
+    "CRQ.PL": 187.4,
+    "CYBN.US": 7.67,
+    "DFTX.US": 30.16,
+    "FIX.US": 1057.68,
+    "GHRS.US": 18.75,
+    "JOBY.US": 4.72,
+    "LUNR.US": 11.73,
+    "MU.US": 719.02,
+    "OKLO.US": 23.03,
+    "PWR.US": 585.9,
+    "RKLB.US": 57.37,
+    "S2B.PL": 61.82,
+    "SNT.PL": 328,
+    "TMDX.US": 92.21,
+    "VLTO.US": 120.31
+   }
+  },
+  {
+   "bench": {
+    "spx": 7323.63,
+    "wig": 158756.3
+   },
+   "date": "2026-11-18",
+   "fx": {
+    "EUR": 4.4089,
+    "USD": 4.017
+   },
+   "prices": {
+    "AAPL.US": 352.45,
+    "AMD.US": 530.14,
+    "ASB.PL": 157.4,
+    "ASTS.US": 25.49,
+    "BFT.PL": 6025,
+    "CMPS.US": 8.12,
+    "CRI.PL": 686,
+    "CRQ.PL": 169.45,
+    "CYBN.US": 6.89,
+    "DFTX.US": 29.12,
+    "FIX.US": 1140.59,
+    "GHRS.US": 18.25,
+    "JOBY.US": 4.19,
+    "LUNR.US": 10.12,
+    "MU.US": 705.27,
+    "OKLO.US": 21.8,
+    "PWR.US": 602.6,
+    "RKLB.US": 53.07,
+    "S2B.PL": 56.4,
+    "SNT.PL": 312,
+    "TMDX.US": 96.43,
+    "VLTO.US": 117.87
+   }
+  },
+  {
+   "bench": {
+    "spx": 7175.83,
+    "wig": 157868.77
+   },
+   "date": "2026-11-19",
+   "fx": {
+    "EUR": 4.4165,
+    "USD": 4.0176
+   },
+   "prices": {
+    "AAPL.US": 349.21,
+    "AMD.US": 489.19,
+    "ASB.PL": 167.1,
+    "ASTS.US": 25.55,
+    "BFT.PL": 5905,
+    "CMPS.US": 8.65,
+    "CRI.PL": 698,
+    "CRQ.PL": 167.2,
+    "CYBN.US": 6.78,
+    "DFTX.US": 29.48,
+    "FIX.US": 1114.02,
+    "GHRS.US": 18.56,
+    "JOBY.US": 3.93,
+    "LUNR.US": 9.78,
+    "MU.US": 690.44,
+    "OKLO.US": 20.84,
+    "PWR.US": 587.43,
+    "RKLB.US": 50.99,
+    "S2B.PL": 55.4,
+    "SNT.PL": 316,
+    "TMDX.US": 94.02,
+    "VLTO.US": 116.08
+   }
+  }
+ ]
+}

@@ -1,0 +1,114 @@
+{
+ "symbols": [
+  {
+   "sym": "MU.US",
+   "name": "Micron",
+   "yahoo": "MU"
+  },
+  {
+   "sym": "AAPL.US",
+   "name": "Apple",
+   "yahoo": "AAPL"
+  },
+  {
+   "sym": "DFTX.US",
+   "name": "Definium Therapeutics",
+   "yahoo": "DFTX"
+  },
+  {
+   "sym": "PWR.US",
+   "name": "Quanta Services",
+   "yahoo": "PWR"
+  },
+  {
+   "sym": "RKLB.US",
+   "name": "Rocket Lab",
+   "yahoo": "RKLB"
+  },
+  {
+   "sym": "FIX.US",
+   "name": "Comfort Systems USA",
+   "yahoo": "FIX"
+  },
+  {
+   "sym": "AMD.US",
+   "name": "AMD",
+   "yahoo": "AMD"
+  },
+  {
+   "sym": "CMPS.US",
+   "name": "Compass",
+   "yahoo": "CMPS"
+  },
+  {
+   "sym": "VLTO.US",
+   "name": "Veralto",
+   "yahoo": "VLTO"
+  },
+  {
+   "sym": "GHRS.US",
+   "name": "GH Research",
+   "yahoo": "GHRS"
+  },
+  {
+   "sym": "LUNR.US",
+   "name": "Intuitive Machines",
+   "yahoo": "LUNR"
+  },
+  {
+   "sym": "CYBN.US",
+   "name": "Cybin",
+   "yahoo": "CYBN"
+  },
+  {
+   "sym": "TMDX.US",
+   "name": "Transmedics Group",
+   "yahoo": "TMDX"
+  },
+  {
+   "sym": "ASTS.US",
+   "name": "AST SpaceMobile",
+   "yahoo": "ASTS"
+  },
+  {
+   "sym": "JOBY.US",
+   "name": "Joby Aviation",
+   "yahoo": "JOBY"
+  },
+  {
+   "sym": "OKLO.US",
+   "name": "Oklo Inc",
+   "yahoo": "OKLO"
+  },
+  {
+   "sym": "SNT.PL",
+   "name": "Synektik",
+   "yahoo": "SNT.WA"
+  },
+  {
+   "sym": "BFT.PL",
+   "name": "Benefit Systems",
+   "yahoo": "BFT.WA"
+  },
+  {
+   "sym": "CRI.PL",
+   "name": "Creotech",
+   "yahoo": "CRI.WA"
+  },
+  {
+   "sym": "S2B.PL",
+   "name": "Syn2bio",
+   "yahoo": "S2B.WA"
+  },
+  {
+   "sym": "ASB.PL",
+   "name": "Asbis",
+   "yahoo": "ASB.WA"
+  },
+  {
+   "sym": "CRQ.PL",
+   "name": "Creotech Quantum",
+   "yahoo": "CRQ.WA"
+  }
+ ]
+}
