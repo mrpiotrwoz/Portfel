@@ -349,6 +349,30 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
       "PKN.PL": { name: "Orlen", sector: "Energia", desc: "Polski koncern paliwowo-energetyczny." }
     }
   };
+  // Portfel pokazowy (link z ?pokaz): wymyślone pozycje, prawdziwe kursy. Nic się nie zapisuje.
+  var SHOW = {
+    demo: false, currency: "PLN", importedAt: "2026-11-01T12:00:00Z", rates: {}, notes: {}, limits: {}, snaps: {},
+    accounts: {
+      USD: { cur: "USD", hasCash: true, deposits: 11500, transfers: 0, cash: 120, closed: 640, closedByYear: {}, dividends: [] },
+      PLN: { cur: "PLN", hasCash: true, deposits: 17000, transfers: 0, cash: 350, closed: -210, closedByYear: {}, dividends: [] }
+    },
+    positions: [
+      { sym: "MU.US", cur: "USD", acct: "USD", volume: 4, openPrice: 610, marketPrice: 690.44, cost: 2440, value: 2761.76 },
+      { sym: "AAPL.US", cur: "USD", acct: "USD", volume: 8, openPrice: 300, marketPrice: 349.21, cost: 2400, value: 2793.68 },
+      { sym: "AMD.US", cur: "USD", acct: "USD", volume: 5, openPrice: 420, marketPrice: 489.19, cost: 2100, value: 2445.95 },
+      { sym: "PWR.US", cur: "USD", acct: "USD", volume: 3, openPrice: 540, marketPrice: 587.43, cost: 1620, value: 1762.29 },
+      { sym: "RKLB.US", cur: "USD", acct: "USD", volume: 40, openPrice: 38, marketPrice: 50.99, cost: 1520, value: 2039.6 },
+      { sym: "ASTS.US", cur: "USD", acct: "USD", volume: 30, openPrice: 31, marketPrice: 25.55, cost: 930, value: 766.5 },
+      { sym: "SNT.PL", cur: "PLN", acct: "PLN", volume: 20, openPrice: 280, marketPrice: 308.2, cost: 5600, value: 6164.0 },
+      { sym: "BFT.PL", cur: "PLN", acct: "PLN", volume: 1, openPrice: 5800, marketPrice: 6320, cost: 5800, value: 6320 },
+      { sym: "CRI.PL", cur: "PLN", acct: "PLN", volume: 6, openPrice: 620, marketPrice: 677, cost: 3720, value: 4062 },
+      { sym: "ASB.PL", cur: "PLN", acct: "PLN", volume: 15, openPrice: 170, marketPrice: 152.9, cost: 2550, value: 2293.5 }
+    ],
+    info: { "MU.US": { name: "Micron" }, "AAPL.US": { name: "Apple" }, "AMD.US": { name: "AMD" }, "PWR.US": { name: "Quanta Services" },
+      "RKLB.US": { name: "Rocket Lab" }, "ASTS.US": { name: "AST SpaceMobile" }, "SNT.PL": { name: "Synektik" },
+      "BFT.PL": { name: "Benefit Systems" }, "CRI.PL": { name: "Creotech" }, "ASB.PL": { name: "Asbis" } }
+  };
+  var showMode = /[?&]pokaz\b/.test(location.search);
   var state = clone(DEMO);
   var LS_KEY = "portfel-xtb-v1";
   var dirty = false;       // zmiana w tej sesji przed wczytaniem bazy
@@ -759,11 +783,12 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
     var st = statsForView();
     var div = dividendRows();
 
-    $("demoBanner").hidden = !state.demo;
+    $("demoBanner").hidden = !state.demo && !showMode;
+    if (showMode) $("demoBanner").textContent = "Portfel pokazowy: pozycje są wymyślone, kursy prawdziwe. Zmiany na tej stronie nie są zapisywane.";
     $("lim-pos").value = (state.limits || {}).pos || 20;
     $("lim-sec").value = (state.limits || {}).sector || 40;
     $("currency").value = state.currency;
-    var asOf = state.importedAt
+    var asOf = showMode ? "Portfel pokazowy" : state.importedAt
       ? "Pozycje z raportu XTB z " + new Date(state.importedAt).toLocaleString("pl-PL", { dateStyle: "long", timeStyle: "short" })
       : (state.demo ? "Przykładowy portfel" : "Pozycje dodane ręcznie");
     if (!state.demo && feed && feed.prices && feedIsNewer()) {
@@ -1191,6 +1216,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
   // ---------- Zapis ----------
   function setStatus(t) { $("status").textContent = t || ""; }
   function persist() {
+    if (showMode) return;
     dirty = true;
     try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
     pushRemote();
@@ -1235,7 +1261,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
   }
   // ---------- Kopia portfela (plik .json) ----------
   function exportBackup() {
-    if (state.demo) { setStatus("To przykładowe dane – nie ma czego zapisywać."); return; }
+    if (state.demo || showMode) { setStatus("To przykładowe dane – nie ma czego zapisywać."); return; }
     var blob = new Blob([JSON.stringify(state, null, 1)], { type: "application/json" });
     var name = "portfel-kopia-" + todayISO() + ".json";
     var file = null;
@@ -1730,7 +1756,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
   $("f-del").addEventListener("click", deleteEditing);
 
   // ---------- Start ----------
-  loadLocal();
+  if (showMode) { state = normalize(clone(SHOW)); stateLoaded = true; } else loadLocal();
   render();
   loadFeed().catch(function () { setStatus("Nie udało się wczytać kursów. Pokazuję ostatnie zapisane wartości."); });
   document.addEventListener("visibilitychange", function () { if (!document.hidden) loadFeed().catch(function () {}); });
