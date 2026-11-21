@@ -135,18 +135,84 @@ function stooqSym(sym) {
   return `${base}.${mkt || "us"}`.toLowerCase();
 }
 
+// ---------- CNBC (USA i S&P 500, wiele symboli w jednym zapytaniu) ----------
+let cnbcCache = null;
+async function cnbcBatch(symbols) {
+  const out = {};
+  for (let i = 0; i < symbols.length; i += 20) {
+    const part = symbols.slice(i, i + 20);
+    const url = "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=" +
+      encodeURIComponent(part.join("|")) + "&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1";
+    const j = await req(url, { headers: { Accept: "application/json" } });
+    const list = (j && j.FormattedQuoteResult && j.FormattedQuoteResult.FormattedQuote) || [];
+    for (const q of [].concat(list)) if (q && q.symbol) out[String(q.symbol).toUpperCase()] = q;
+  }
+  return out;
+}
+async function cnbc(sym) {
+  if (!cnbcCache) throw new Error("brak danych CNBC");
+  const q = cnbcCache[sym.toUpperCase()];
+  if (!q) throw new Error("brak symbolu");
+  const price = num(q.last);
+  if (!(price > 0)) throw new Error("brak kursu");
+  const date = /^\d{4}-\d{2}-\d{2}/.test(q.last_time || "") ? q.last_time.slice(0, 10) : dayIn(MARKET.US.tz, Date.now() / 1000);
+  return simpleResult("US", price, date, num(q.previous_day_closing), q.currencyCode || "USD", "cnbc");
+}
+
+// ---------- Biznesradar (GPW) ----------
+function lastSessionDay(tz) {
+  // Dziś, a w weekend ostatni piątek.
+  const d = new Date(dayIn(tz, Date.now() / 1000) + "T12:00:00Z");
+  const wd = d.getUTCDay();
+  if (wd === 6) d.setUTCDate(d.getUTCDate() - 1);
+  if (wd === 0) d.setUTCDate(d.getUTCDate() - 2);
+  return d.toISOString().slice(0, 10);
+}
+function plNum(s) {
+  const n = parseFloat(String(s || "").replace(/[\s ]/g, "").replace(",", "."));
+  return isFinite(n) ? n : null;
+}
+async function biznesradar(code) {
+  const html = await req(`https://www.biznesradar.pl/notowania/${encodeURIComponent(code)}`, { type: "text" });
+  const m = html.match(/class="q_ch_act"[^>]*>\s*([\d\s ]+(?:,\d+)?)/);
+  const price = m ? plNum(m[1]) : null;
+  if (!(price > 0)) throw new Error("brak kursu");
+  // Data notowania: pełna data, jeśli jest w nagłówku, inaczej dzisiejsza sesja (w weekend piątek).
+  const dm = html.match(/class="q_ch_date"[^>]*>[\s\S]{0,80}?(\d{2})\.(\d{2})\.(\d{4})/);
+  const date = dm ? `${dm[3]}-${dm[2]}-${dm[1]}` : lastSessionDay(MARKET.PL.tz);
+  const pm = html.match(/Kurs odniesienia[\s\S]{0,200}?>\s*([\d\s ]+,\d+)\s*</);
+  return simpleResult("PL", price, date, pm ? plNum(pm[1]) : null, "PLN", "biznesradar");
+}
+
+// ---------- Test źródeł na starcie ----------
+async function probe(name, url, marker) {
+  try {
+    const res = await fetch(url, { headers: { "User-Agent": UA, "Accept-Language": "en-US,en;q=0.9" } });
+    const body = await res.text();
+    const title = (body.match(/<title[^>]*>([^<]{0,80})/i) || [])[1] || "";
+    const at = marker ? body.search(marker) : -1;
+    const snip = (at >= 0 ? body.slice(Math.max(0, at - 60), at + 140) : body.slice(0, 160)).replace(/\s+/g, " ");
+    log(`[test] ${name}: HTTP ${res.status}, ${body.length} B, ${at >= 0 ? "znacznik OK" : "BRAK znacznika"}${title ? `, title="${title.trim()}"` : ""} | ${snip}`);
+    return res.ok && at >= 0;
+  } catch (e) {
+    log(`[test] ${name}: ${e.message}${e.cause ? " (" + (e.cause.code || e.cause.message) + ")" : ""}`);
+    return false;
+  }
+}
+
 // Próbuje kolejnych źródeł, aż któreś poda kurs.
 async function quote(cands) {
   const errs = [];
   for (const c of cands) {
     if (disabled.has(c.src)) { errs.push(`${c.src}: wyłączone`); continue; }
     try {
-      const q = c.src === "yahoo" ? await yahoo(c.t) : c.src === "google" ? await google(c.t, c.mkt) : await stooq(c.t, c.mkt);
+      const q = c.src === "yahoo" ? await yahoo(c.t) : c.src === "google" ? await google(c.t, c.mkt)
+        : c.src === "cnbc" ? await cnbc(c.t) : c.src === "biznesradar" ? await biznesradar(c.t) : await stooq(c.t, c.mkt);
       noteOk(c.src);
       return q;
     } catch (e) {
       noteFail(c.src, e.message);
-      errs.push(`${c.src}:${c.t} ${e.message}`);
+      errs.push(`${c.src}:${c.t} ${e.message}${e.cause ? " (" + (e.cause.code || e.cause.message) + ")" : ""}`);
     }
     await sleep(250);
   }
@@ -177,6 +243,24 @@ if (!watch || !Array.isArray(watch.symbols) || !watch.symbols.length) { log("Bra
 const latest = await readJSON("latest.json", {});
 const history = await readJSON("history.json", { days: [] });
 
+// Szybki test źródeł; niedziałające pomijam od razu.
+const usBases = watch.symbols.filter((x) => !x.sym.endsWith(".PL")).map((x) => x.sym.split(".")[0]);
+const plFirst = (watch.symbols.find((x) => x.sym.endsWith(".PL")) || { sym: "SNT.PL" }).sym.split(".")[0];
+const tests = {
+  cnbc: probe("cnbc", "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=MU&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json", /"last"/),
+  biznesradar: probe("biznesradar", `https://www.biznesradar.pl/notowania/${plFirst}`, /q_ch_act/),
+  google: probe("google", "https://www.google.com/finance/quote/MU:NASDAQ?hl=en", /data-last-price/),
+  stooq: probe("stooq", "https://stooq.pl/q/l/?s=mu.us&f=sd2t2ohlc&h&e=csv", /\d{4}-\d{2}-\d{2}/)
+};
+for (const [k, pr] of Object.entries(tests)) if (!(await pr)) disabled.add(k);
+try { await yahooSession(); log("[test] yahoo: ciasteczko i crumb OK"); }
+catch (e) { log(`[test] yahoo: ${e.message}`); disabled.add("yahoo"); }
+if (!disabled.has("cnbc")) {
+  try { cnbcCache = await cnbcBatch([...usBases, ".SPX"]); log(`[test] cnbc: ${Object.keys(cnbcCache).length} symboli`); }
+  catch (e) { log(`[test] cnbc batch: ${e.message}`); disabled.add("cnbc"); }
+}
+log(`Źródła wyłączone: ${[...disabled].join(", ") || "żadne"}`);
+
 const prices = { ...(latest.prices || {}) };
 const closesBySym = {};
 const ok = [], failed = [];
@@ -184,6 +268,8 @@ for (const s of watch.symbols) {
   const mkt = s.sym.endsWith(".PL") ? "PL" : "US";
   const base = s.sym.split(".")[0];
   const cands = [];
+  if (mkt === "US") cands.push({ src: "cnbc", t: base });
+  if (mkt === "PL") cands.push({ src: "biznesradar", t: base });
   if (s.yahoo) cands.push({ src: "yahoo", t: s.yahoo });
   const gex = s.google ? [s.google] : GOOGLE_EX[mkt].map((ex) => `${base}:${ex}`);
   gex.forEach((g) => cands.push({ src: "google", t: g, mkt }));
@@ -205,8 +291,8 @@ for (const s of watch.symbols) {
 
 const bench = {}, benchCloses = {};
 const BENCH = {
-  spx: [{ src: "yahoo", t: "^GSPC" }, { src: "google", t: ".INX:INDEXSP", mkt: "US" }, { src: "stooq", t: "^spx", mkt: "US" }],
-  wig: [{ src: "yahoo", t: "WIG.WA" }, { src: "google", t: "WIG:WSE", mkt: "PL" }, { src: "stooq", t: "wig", mkt: "PL" }]
+  spx: [{ src: "cnbc", t: ".SPX" }, { src: "yahoo", t: "^GSPC" }, { src: "google", t: ".INX:INDEXSP", mkt: "US" }, { src: "stooq", t: "^spx", mkt: "US" }],
+  wig: [{ src: "biznesradar", t: "WIG" }, { src: "yahoo", t: "WIG.WA" }, { src: "google", t: "WIG:WSE", mkt: "PL" }, { src: "stooq", t: "wig", mkt: "PL" }]
 };
 for (const k of Object.keys(BENCH)) {
   try {
