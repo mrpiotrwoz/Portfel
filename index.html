@@ -479,12 +479,26 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
     return p.value != null ? p.value : p.cost;
   }
   // Zmiana dzienna pozycji: kurs zamknięcia (lub bieżący) wobec poprzedniego zamknięcia.
+  // Poprzednie zamknięcie z historii, gdy źródło kursu go nie podało (np. GPW).
+  function prevFromHistory(sym, date) {
+    var days = (hist && hist.days) || [];
+    for (var i = days.length - 1; i >= 0; i--) {
+      var d = days[i];
+      if (!d || !d.date || d.date >= date || !d.prices) continue;
+      var v = d.prices[sym];
+      v = v && v.price > 0 ? v.price : v;
+      if (v > 0) return v;
+    }
+    return null;
+  }
   function dayMove(p) {
     var fp = livePrice(p);
-    if (!fp || !(fp.prevClose > 0) || !(p.volume > 0)) return null;
+    if (!fp || !(p.volume > 0)) return null;
+    var prevClose = fp.prevClose > 0 ? fp.prevClose : (fp.date ? prevFromHistory(p.sym, fp.date) : null);
+    if (!(prevClose > 0)) return null;
     var k = rate(p.cur || state.currency) || 0;
-    return { pct: fp.price / fp.prevClose - 1, abs: p.volume * (fp.price - fp.prevClose) * k,
-      prev: p.volume * fp.prevClose * k, date: fp.date, final: fp.final };
+    return { pct: fp.price / prevClose - 1, abs: p.volume * (fp.price - prevClose) * k,
+      prev: p.volume * prevClose * k, date: fp.date, final: fp.final };
   }
   function renderToday(rs, st, totalPl) {
     var card = $("todayCard");
@@ -514,7 +528,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
           signedMoney(x.m.abs) + '</span><span class="pc num">' + change(x.m.pct, pct(x.m.pct, true)) + "</span></div>";
       }).join("");
     }
-    var n = Math.min(5, Math.ceil(sorted.length / 2));
+    var n = 5;
     $("todayBest").innerHTML = rowsHtml(sorted.filter(function (x) { return x.m.pct > 0; }).slice(0, n));
     $("todayWorst").innerHTML = rowsHtml(sorted.filter(function (x) { return x.m.pct < 0; }).reverse().slice(0, n));
   }
