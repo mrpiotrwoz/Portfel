@@ -241,6 +241,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
 
   <section class="card" id="histCard" hidden>
     <div class="table-head"><h2>Historia portfela</h2><span class="muted small">wartość i wpłaty</span></div>
+    <p class="muted small" id="histNote" hidden></p>
     <div class="chart" id="histValue"></div>
     <div class="table-head" style="margin-top:14px"><h2>Stopa zwrotu na tle rynku</h2><span class="muted small">zmiana od pierwszego dnia, bez wpływu wpłat</span></div>
     <div class="chart" id="histIndex"></div>
@@ -1113,6 +1114,14 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
     card.hidden = state.demo;
     if (state.demo) return;
     var s = historySeries();
+    // Rachunki bez dat transakcji (stara kopia .json albo starszy import): historia liczona z dzisiejszych pozycji.
+    var noTl = (view === "all" ? Object.keys(state.accounts || {}) : [view]).filter(function (l) {
+      var a = (state.accounts || {})[l];
+      return a && a.hasCash && !a.tl && (a.deposits || a.cash || state.positions.some(function (p) { return p.acct === l; }));
+    });
+    $("histNote").hidden = !noTl.length;
+    $("histNote").textContent = noTl.length ? "Brak dat transakcji dla rachunku " + noTl.join(", ") +
+      ": wykres wycenia dzisiejsze pozycje po dawnych kursach, a wpłaty są stałe. Zaimportuj raport z XTB (plik zip lub xlsx), żeby zobaczyć prawdziwą historię od pierwszej wpłaty." : "";
     if (s.length < 2) {
       $("histValue").innerHTML = '<div class="muted">Zbieram dane od ' + (s.length ? esc(fmtDate(s[0].date)) : "dziś") +
         ". Wykres pojawi się, gdy będą co najmniej dwa dni notowań.</div>";
