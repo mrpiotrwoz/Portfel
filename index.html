@@ -112,6 +112,13 @@ form.grid select { width: 100%; background: var(--bg); }
 form.grid textarea { font: inherit; color: var(--ink); padding: 8px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--bg); width: 100%; resize: vertical; }
 .thesis { border-left: 3px solid var(--s1); padding: 2px 0 2px 10px; margin: 8px 0; max-width: 65ch; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.today { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 28px; margin-top: 12px; }
+.today h3 { font-family: var(--display); font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+.mv { display: flex; align-items: baseline; gap: 10px; padding: 7px 0; border-top: 1px solid var(--line); }
+.mv .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mv .nm small { color: var(--ink-2); margin-left: 6px; }
+.mv .zl { color: var(--ink-2); font-size: 14px; min-width: 84px; text-align: right; }
+.mv .pc { min-width: 74px; text-align: right; font-weight: 600; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
 .tile .label { color: var(--ink-2); font-size: 14px; }
 .tile .value { font-family: var(--display); font-weight: 600; font-size: clamp(19px, 2.6vw, 26px); line-height: 1.2; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -206,6 +213,14 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
   <nav class="views" id="views" aria-label="Portfel" hidden></nav>
 
   <section class="tiles" id="tiles"></section>
+  <section class="card" id="todayCard" hidden>
+    <div class="table-head"><h2>Dziś</h2><span class="muted small" id="todayAsOf"></span></div>
+    <div class="facts" id="todayFacts" style="margin-top:4px"></div>
+    <div class="today">
+      <div><h3>Najlepsze</h3><div id="todayBest"></div></div>
+      <div><h3>Najsłabsze</h3><div id="todayWorst"></div></div>
+    </div>
+  </section>
   <section class="card" id="acctCard" hidden>
     <h2>Portfele</h2>
     <div class="table-scroll"><table id="acctTable"></table></div>
@@ -462,6 +477,46 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
     var fp = livePrice(p);
     if (fp) return round2(p.volume * fp.price);
     return p.value != null ? p.value : p.cost;
+  }
+  // Zmiana dzienna pozycji: kurs zamknięcia (lub bieżący) wobec poprzedniego zamknięcia.
+  function dayMove(p) {
+    var fp = livePrice(p);
+    if (!fp || !(fp.prevClose > 0) || !(p.volume > 0)) return null;
+    var k = rate(p.cur || state.currency) || 0;
+    return { pct: fp.price / fp.prevClose - 1, abs: p.volume * (fp.price - fp.prevClose) * k,
+      prev: p.volume * fp.prevClose * k, date: fp.date, final: fp.final };
+  }
+  function renderToday(rs, st, totalPl) {
+    var card = $("todayCard");
+    var list = rs.map(function (r) { var m = dayMove(r.p); return m ? { r: r, m: m } : null; }).filter(Boolean);
+    card.hidden = state.demo || !list.length;
+    if (card.hidden) return;
+    var abs = sum(list, function (x) { return x.m.abs; }), prev = sum(list, function (x) { return x.m.prev; });
+    var dates = {};
+    list.forEach(function (x) { dates[x.m.date] = 1; });
+    var ds = Object.keys(dates).sort().map(fmtDate);
+    var live = list.some(function (x) { return x.m.final === false; });
+    $("todayAsOf").textContent = "sesja " + ds.join(" / ") + (live ? " · w trakcie sesji" : " · kursy zamknięcia");
+    var res = st.total.n ? st.total.result : totalPl, base = st.total.n ? st.total.inflow : null;
+    $("todayFacts").innerHTML =
+      '<div class="fact"><div class="label">Wynik dziś</div><div class="value num">' + change(abs, signedMoney(abs)) + '</div><div class="note">' +
+        change(prev > 0 ? abs / prev : null, pct(prev > 0 ? abs / prev : null, true)) + ' wobec poprzedniego zamknięcia</div></div>' +
+      '<div class="fact"><div class="label">Wynik łączny</div><div class="value num">' + change(res, signedMoney(res)) + '</div><div class="note">' +
+        (base > 0 ? change(res / base, pct(res / base, true)) + " od wpłat, razem z zamkniętymi pozycjami" : "otwarte pozycje względem kosztu zakupu") + "</div></div>" +
+      '<div class="fact"><div class="label">Na plusie / na minusie dziś</div><div class="value num">' +
+        list.filter(function (x) { return x.m.pct > 0; }).length + " / " + list.filter(function (x) { return x.m.pct < 0; }).length + "</div>" +
+        (list.length < rs.length ? '<div class="note">' + (rs.length - list.length) + " bez zmiany dziennej (brak kursu)</div>" : "") + "</div>";
+    var sorted = list.slice().sort(function (a, b) { return b.m.pct - a.m.pct; });
+    function rowsHtml(items) {
+      if (!items.length) return '<div class="muted small" style="padding:7px 0">Brak.</div>';
+      return items.map(function (x) {
+        return '<div class="mv"><span class="nm">' + esc(x.r.name) + "<small>" + esc(x.r.sym) + '</small></span><span class="zl num">' +
+          signedMoney(x.m.abs) + '</span><span class="pc num">' + change(x.m.pct, pct(x.m.pct, true)) + "</span></div>";
+      }).join("");
+    }
+    var n = Math.min(5, Math.ceil(sorted.length / 2));
+    $("todayBest").innerHTML = rowsHtml(sorted.filter(function (x) { return x.m.pct > 0; }).slice(0, n));
+    $("todayWorst").innerHTML = rowsHtml(sorted.filter(function (x) { return x.m.pct < 0; }).reverse().slice(0, n));
   }
   function viewPositions() {
     return state.positions.filter(function (p) { return view === "all" || p.acct === view; });
@@ -740,6 +795,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
       rs.length ? 'Nie znam jeszcze sektorów Twoich spółek.<button type="button" class="js-info">Uzupełnij sektory</button>' : noData));
     pies.appendChild(pieCard("Rynki i waluty", slices(group(rs, function (r) { return marketLabel(r.sym); })), noData));
 
+    renderToday(rs, st, pl);
     renderFacts(sorted, total);
     renderDividends(div);
     renderHistory();
