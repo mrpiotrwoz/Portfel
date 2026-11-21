@@ -4,7 +4,7 @@ import { readFile, writeFile } from "node:fs/promises";
 
 const DIR = new URL("../data/", import.meta.url);
 const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
-const MAX_DAYS = 400;
+const MAX_DAYS = 4000; // ok. 15 lat notowań; historia portfela potrzebuje kursów od pierwszej wpłaty
 const log = (...a) => console.log(...a);
 
 async function readJSON(name, fallback) {
@@ -233,7 +233,7 @@ async function quote(cands) {
 // ---------- NBP ----------
 async function nbp() {
   const out = {};
-  for (const code of ["USD", "EUR"]) {
+  for (const code of ["USD", "EUR", "GBP"]) {
     const j = await req(`https://api.nbp.pl/api/exchangerates/rates/A/${code}/last/30/?format=json`);
     out[code] = (j.rates || []).map((r) => ({ date: r.effectiveDate, mid: r.mid }));
   }
@@ -317,7 +317,7 @@ for (const k of Object.keys(BENCH)) {
 let fxSeries = null, fx = latest.fx || null;
 try {
   fxSeries = await nbp();
-  fx = { USD: fxSeries.USD.at(-1).mid, EUR: fxSeries.EUR.at(-1).mid };
+  fx = { USD: fxSeries.USD.at(-1).mid, EUR: fxSeries.EUR.at(-1).mid, GBP: fxSeries.GBP.at(-1).mid };
 } catch (e) { log(`! NBP: ${e.message} – zostają poprzednie kursy walut`); }
 
 // Brak poprzedniego zamknięcia w źródle (np. GPW): biorę je z historii.
@@ -351,7 +351,11 @@ for (const k of Object.keys(benchCloses)) {
 }
 if (fxSeries) for (const d of days.values()) { const f = fxOn(fxSeries, d.date); if (f) d.fx = f; }
 const sorted = [...days.values()].filter((d) => d.prices && Object.keys(d.prices).length).sort((a, b) => (a.date < b.date ? -1 : 1)).slice(-MAX_DAYS);
-await writeJSON("history.json", { days: sorted, updatedAt: now });
+// Jeden dzień w wierszu: plik jest mniejszy, a zmiany w historii łatwo przejrzeć.
+const { days: _old, updatedAt: _u, ...histMeta } = history;
+const histText = "{\n" + Object.entries(histMeta).map(([k, v]) => JSON.stringify(k) + ":" + JSON.stringify(v) + ",\n").join("") +
+  '"days":[\n' + sorted.map((d) => JSON.stringify(d)).join(",\n") + "\n],\n" + '"updatedAt":' + JSON.stringify(now) + "\n}\n";
+await writeFile(new URL("history.json", DIR), histText);
 
 log(`Odświeżono ${ok.length}/${watch.symbols.length} kursów.` + (failed.length ? ` Pominięte: ${failed.join(", ")}.` : ""));
 log(`Indeksy: ${Object.keys(bench).join(", ") || "brak"}. Waluty: ${fx ? `USD ${fx.USD}, EUR ${fx.EUR}` : "brak"}. Dni w historii: ${sorted.length}.`);
