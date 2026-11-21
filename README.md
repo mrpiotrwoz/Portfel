@@ -42,10 +42,12 @@ Wykres „Historia portfela” odtwarza każdy dzień od pierwszej wpłaty: akcj
 ## Widżet (Scriptable)
 
 1. Zainstaluj darmową aplikację **Scriptable** z App Store.
-2. Utwórz nowy skrypt (+), wklej zawartość pliku `portfel-widzet.js`, który zawiera już Twoje pozycje. W drugiej linii ustawień zmień `BASE_URL` na adres swojej strony.
+2. Utwórz nowy skrypt (+) i wklej zawartość pliku `portfel-widzet.js`, który zawiera już Twoje pozycje, gotówkę i wpłaty. `BASE_URL` jest ustawiony na adres strony.
 3. Uruchom skrypt raz w aplikacji, żeby sprawdzić podgląd.
 4. Na ekranie głównym przytrzymaj puste miejsce, wybierz **Edytuj → Dodaj widżet → Scriptable**, wybierz rozmiar i w ustawieniach widżetu wskaż skrypt.
 5. Po zmianie ilości akcji popraw tablicę `HOLDINGS` w skrypcie.
+
+Widżet pokazuje wartość portfela, wynik z dziś (albo z ostatniej sesji, gdy giełdy są zamknięte), wynik ogółem względem wpłat (`INFLOW`) oraz najlepsze i najgorsze spółki dnia. Mały rozmiar: wartość, oba wyniki i po jednej spółce w górę i w dół. Średni: po 3 spółki. Duży: po 6 spółek z kwotą zmiany.
 
 ## Dodanie lub usunięcie spółki
 
