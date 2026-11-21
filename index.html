@@ -954,6 +954,30 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
     while (keys.length > 800) delete state.snaps[keys.shift()];
     persist();
   }
+  // Waluta notowań instrumentu: z history.json (np. ETF-y z Londynu w USD), inaczej według giełdy.
+  function symCur(sym) {
+    var c = hist && hist.cur && hist.cur[sym];
+    if (c) return c;
+    var m = splitSym(sym).market;
+    if (!m) return "USD";
+    var lab = MARKETS[m] || "";
+    var mm = lab.match(/\(([A-Z]{3})\)/);
+    return mm ? mm[1] : "USD";
+  }
+  // Suma narastająca dziennych zmian ({data: kwota}) dla kolejnych, rosnących dat.
+  function runningSum(map) {
+    var keys = Object.keys(map || {}).sort(), i = 0, sum = 0;
+    return function (date) {
+      while (i < keys.length && keys[i] <= date) { sum += map[keys[i]]; i++; }
+      return sum;
+    };
+  }
+  function tlStart(tl) {
+    var first = null;
+    Object.keys(tl.cash || {}).concat(Object.keys(tl.flow || {})).forEach(function (d) { if (!first || d < first) first = d; });
+    (tl.lots || []).forEach(function (x) { if (x[2] && (!first || x[2] < first)) first = x[2]; });
+    return first;
+  }
   function historySeries() {
     var days = {};
     ((hist && hist.days) || []).forEach(function (d) { if (d && d.date) days[d.date] = d; });
@@ -961,18 +985,50 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
     var dates = Object.keys(days).sort();
     var labels = view === "all" ? Object.keys(state.accounts || {}) : [view];
     var out = [];
+    // Odtworzenie z transakcji: rachunki z zapisanymi datami kupna, sprzedaży i operacji gotówkowych.
+    var tlx = {};
+    labels.forEach(function (l) {
+      var a = (state.accounts || {})[l];
+      if (a && a.tl && (a.tl.lots || []).length + Object.keys(a.tl.cash || {}).length) {
+        tlx[l] = { start: tlStart(a.tl), cash: runningSum(a.tl.cash), flow: runningSum(a.tl.flow) };
+      }
+    });
+    var last = {}, lastFx = {};
+    // Wpłaty liczę po kursie waluty z dnia wpłaty: zmiana kursu dolara nie jest ani wpłatą, ani zyskiem z wpłat.
+    var prevIn = {}, inflowSum = 0;
+    function addIn(l, raw, k) { var dlt = raw - (prevIn[l] || 0); prevIn[l] = raw; return dlt * k; }
     dates.forEach(function (date) {
       var d = days[date], snap = (state.snaps || {})[date], value = 0, inflow = 0, ok = false;
+      Object.keys(d.prices || {}).forEach(function (s) {
+        var v = d.prices[s];
+        v = v && v.price > 0 ? v.price : v;
+        if (v > 0) last[s] = v;
+      });
+      Object.keys(d.fx || {}).forEach(function (c) { if (d.fx[c] > 0) lastFx[c] = d.fx[c]; });
+      function conv(from, to) {
+        if (from === to) return 1;
+        var x = from === "PLN" ? 1 : lastFx[from], y = to === "PLN" ? 1 : lastFx[to];
+        return x > 0 && y > 0 ? x / y : (rate(from) || 0) / (rate(to) || 1);
+      }
       labels.forEach(function (l) {
         var a = (state.accounts || {})[l];
         if (!a || !a.hasCash) return;
-        var k = 1;
-        if (view === "all" && a.cur !== state.currency) {
-          var fx = d.fx || {};
-          var x = a.cur === "PLN" ? 1 : fx[a.cur], y = state.currency === "PLN" ? 1 : fx[state.currency];
-          k = x > 0 && y > 0 ? x / y : (rate(a.cur) || 0);
+        var k = view === "all" && a.cur !== state.currency ? conv(a.cur, state.currency) : 1;
+        var t = tlx[l];
+        if (t) {
+          var cash = t.cash(date), flow = t.flow(date);
+          if (!t.start || date < t.start) return;
+          var v = cash;
+          (a.tl.lots || []).forEach(function (x) {
+            if (!(x[2] <= date) || (x[3] && x[3] <= date)) return;
+            var px = last[x[0]];
+            if (!(px > 0) || (x[4] > 0 && (px / x[4] < 0.1 || px / x[4] > 10))) px = x[4];
+            if (px > 0) v += x[1] * px * conv(symCur(x[0]), a.cur || "PLN");
+          });
+          value += v * k; inflow += addIn(l, flow, k); ok = true;
+          return;
         }
-        if (snap && snap[l]) { value += snap[l].value * k; inflow += snap[l].inflow * k; ok = true; return; }
+        if (snap && snap[l]) { value += snap[l].value * k; inflow += addIn(l, snap[l].inflow, k); ok = true; return; }
         if (!d.prices) return;
         var v = a.cash || 0;
         state.positions.forEach(function (p) {
@@ -982,16 +1038,18 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
           if (price && p.marketPrice > 0 && (price / p.marketPrice < 0.3 || price / p.marketPrice > 3)) price = null;
           v += price && p.volume > 0 ? p.volume * price : (p.value != null ? p.value : p.cost);
         });
-        value += v * k; inflow += ((a.deposits || 0) + (a.transfers || 0)) * k; ok = true;
+        value += v * k; inflow += addIn(l, (a.deposits || 0) + (a.transfers || 0), k); ok = true;
       });
-      if (ok && value > 0) out.push({ date: date, value: value, inflow: inflow, bench: d.bench || {} });
+      inflowSum += inflow;
+      if (ok && value > 0) out.push({ date: date, value: value, inflow: inflowSum, flowIn: inflow, bench: d.bench || {} });
     });
     // Indeks stopy zwrotu bez wpływu wpłat.
     var idx = 100, base = {};
     out.forEach(function (p, i) {
       if (i > 0) {
         var prev = out[i - 1];
-        var r = (p.value - (p.inflow - prev.inflow)) / prev.value;
+        // Wpłata liczona od początku dnia: zwykle zaraz po niej kupujesz akcje.
+        var r = prev.value + p.flowIn > 0 ? p.value / (prev.value + p.flowIn) : 1;
         if (r > 0.3 && r < 3) idx *= r;
       }
       p.idx = idx;
@@ -1011,7 +1069,8 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
     series.forEach(function (s) { s.points.forEach(function (p) { ys.push(p.y); }); });
     var lo = Math.min.apply(null, ys), hi = Math.max.apply(null, ys);
     if (hi - lo < 1e-9) { hi += 1; lo -= 1; }
-    var pad = (hi - lo) * 0.08; lo -= pad; hi += pad;
+    var pad = (hi - lo) * 0.08, nonNeg = lo >= 0; lo -= pad; hi += pad;
+    if (nonNeg && lo < 0) lo = 0;
     function X(x) { var i = xs.indexOf(x); return L + (xs.length > 1 ? i / (xs.length - 1) : 0.5) * (W - L - R); }
     function Y(y) { return T + (1 - (y - lo) / (hi - lo)) * (H - T - B); }
     var svg = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Wykres">';
@@ -1301,6 +1360,59 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
     return -1;
   }
   function round2(x) { return Math.round(x * 100) / 100; }
+  // Data (RRRR-MM-DD) z komórki raportu: liczba Excela, obiekt Date albo tekst.
+  function toDay(v) {
+    if (v == null || v === "") return null;
+    if (v instanceof Date) return isNaN(v) ? null : v.toISOString().slice(0, 10);
+    if (typeof v === "number") return v > 20000 && v < 90000 ? new Date(Math.round((v - 25569) * 86400000)).toISOString().slice(0, 10) : null;
+    var s = String(v).trim(), m;
+    if ((m = s.match(/^(\d{4})-(\d{2})-(\d{2})/))) return m[1] + "-" + m[2] + "-" + m[3];
+    if ((m = s.match(/^(\d{2})\.(\d{2})\.(\d{4})/))) return m[3] + "-" + m[2] + "-" + m[1];
+    if (/^\d{5}(\.\d+)?$/.test(s)) return toDay(parseFloat(s));
+    return null;
+  }
+
+  // Transze z datami: [symbol, ilość, data kupna, data sprzedaży lub "", cena kupna].
+  // Arkusz otwartych pozycji (wiersze z typem BUY) albo zamkniętych pozycji.
+  function parseLots(table) {
+    for (var i = 0; i < table.length; i++) {
+      var h = (table[i] || []).map(norm);
+      var t = findCol(h, ["ticker"]), v = findCol(h, ["volume"]), ot = findCol(h, ["open time (utc)", "open time"]);
+      if (t < 0 || v < 0 || ot < 0) continue;
+      var ct = findCol(h, ["close time (utc)", "close time"]), ty = findCol(h, ["type"]), op = findCol(h, ["open price"]);
+      var lots = [];
+      for (var r = i + 1; r < table.length; r++) {
+        var row = table[r] || [];
+        var sym = String(row[t] == null ? "" : row[t]).toUpperCase().trim();
+        var vol = parseNum(row[v]), open = toDay(row[ot]);
+        if (!sym || !(vol > 0) || !open) continue;
+        if (ty >= 0 && norm(row[ty]).indexOf("sell") >= 0) continue;
+        var close = ct >= 0 ? toDay(row[ct]) : null;
+        if (ct >= 0 && !close) continue;
+        lots.push([sym, vol, open, close || "", op >= 0 ? (parseNum(row[op]) || 0) : 0]);
+      }
+      return { closed: ct >= 0, lots: lots };
+    }
+    return null;
+  }
+  // Dzienne zmiany gotówki i wpłat netto (wpłaty, wypłaty, przelewy między rachunkami).
+  function parseCashDays(table) {
+    for (var i = 0; i < table.length; i++) {
+      var h = (table[i] || []).map(norm);
+      var ty = findCol(h, ["type"]), am = findCol(h, ["amount"]), tm = findCol(h, ["time"]);
+      if (ty < 0 || am < 0 || tm < 0) continue;
+      var cash = {}, flow = {};
+      for (var r = i + 1; r < table.length; r++) {
+        var row = table[r] || [];
+        var type = norm(row[ty]), amt = parseNum(row[am]), day = toDay(row[tm]);
+        if (!type || type === "total" || amt == null || !day) continue;
+        cash[day] = round2((cash[day] || 0) + amt);
+        if (/deposit|withdraw|transfer/.test(type)) flow[day] = round2((flow[day] || 0) + amt);
+      }
+      return { cash: cash, flow: flow };
+    }
+    return null;
+  }
 
   // Nowy raport XTB: arkusz "Open Positions" z wierszem zbiorczym dla każdej spółki.
   function parseOpenNew(table) {
@@ -1422,7 +1534,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
         var v = parseNum(row[pl]);
         if (v == null) continue;
         total += v;
-        var y = ct >= 0 ? String(row[ct] || "").slice(0, 4) : "";
+        var y = ct >= 0 ? (toDay(row[ct]) || String(row[ct] || "")).slice(0, 4) : "";
         if (/^\d{4}$/.test(y)) byYear[y] = round2((byYear[y] || 0) + v);
       }
       return { total: round2(total), byYear: byYear };
@@ -1447,7 +1559,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
         else if (/transfer/.test(type)) out.transfers += amt;
         else if (/^dividend|withholding/.test(type) && tk >= 0) {
           var sym = String(row[tk] || "").toUpperCase().trim();
-          var date = String(row[tm] || "").slice(0, 10);
+          var date = toDay(row[tm]) || String(row[tm] || "").slice(0, 10);
           if (!sym) continue;
           var key = sym + "|" + date;
           if (!map[key]) { map[key] = { sym: sym, name: nm >= 0 ? String(row[nm] || "").trim() : "", date: date, gross: 0, tax: 0 }; out.dividends.push(map[key]); }
@@ -1480,9 +1592,22 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
       names.forEach(function (n) { if (closed == null) closed = parseClosed(b.sheets[n]); });
       var cash = null;
       names.forEach(function (n) { if (!cash) cash = parseCash(b.sheets[n]); });
+      var openLots = null, closedLots = null, cashDays = null;
+      names.forEach(function (n) {
+        var lt = parseLots(b.sheets[n]);
+        if (lt && lt.closed && !closedLots) closedLots = lt.lots;
+        if (lt && !lt.closed && !openLots) openLots = lt.lots;
+        if (!cashDays) cashDays = parseCashDays(b.sheets[n]);
+      });
       if (!open && closed == null && !cash) return;
       var cur = (open && open.cur) || (DEFAULT_PLN[label] ? label : null);
-      accounts.push({ label: label, cur: cur, positions: open ? open.positions : [], closed: closed, cash: cash });
+      var item = { label: label, cur: cur, positions: open ? open.positions : [], hasOpen: !!open, closed: closed, cash: cash,
+        openLots: openLots, closedLots: closedLots, cashDays: cashDays };
+      // Kilka plików z tego samego rachunku (np. osobno otwarte, zamknięte i operacje gotówkowe): łączę w jeden.
+      var same = accounts.filter(function (a) { return a.label === label; })[0];
+      if (!same) { accounts.push(item); return; }
+      if (!same.hasOpen && item.hasOpen) { same.positions = item.positions; same.hasOpen = true; }
+      ["cur", "closed", "cash", "openLots", "closedLots", "cashDays"].forEach(function (k) { if (same[k] == null && item[k] != null) same[k] = item[k]; });
     });
     if (!accounts.length) return { ok: false };
 
@@ -1496,6 +1621,10 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
       var c = a.cash || {};
       state.accounts[a.label] = { cur: cur, closed: a.closed ? a.closed.total : 0, closedByYear: a.closed ? a.closed.byYear : {}, hasCash: !!a.cash, deposits: c.deposits || 0,
         transfers: c.transfers || 0, cash: c.cash || 0, dividends: c.dividends || [] };
+      if (a.cashDays && (a.openLots || a.closedLots)) {
+        // Historia rachunku z dat transakcji: na wykresie każdy dzień to akcje, które wtedy były w portfelu.
+        state.accounts[a.label].tl = { lots: (a.openLots || []).concat(a.closedLots || []), cash: a.cashDays.cash, flow: a.cashDays.flow };
+      }
       a.positions.forEach(function (p) {
         var existing = state.positions.filter(function (x) { return x.sym === p.sym; })[0];
         if (existing) {
@@ -1596,7 +1725,7 @@ footer { color: var(--ink-2); font-size: 14px; max-width: 75ch; }
         : "Nie udało się odczytać pliku. Wybierz raport z XTB w formacie zip, xlsx lub csv.");
     });
   }
-  window.__portfelTest = { importBooks: function (b) { finishImport(b); }, setFeed: function (f) { feed = f; render(); }, setHist: function (h) { hist = h; render(); }, getState: function () { return clone(state); } };
+  window.__portfelTest = { importBooks: function (b) { finishImport(b); }, setFeed: function (f) { feed = f; render(); }, setHist: function (h) { hist = h; render(); }, getState: function () { return clone(state); }, series: function () { return historySeries(); } };
 
   // ---------- Opisy i sektory od Claude ----------
   var SECTORS = ["Technologia", "Półprzewodniki", "Ochrona zdrowia", "Finanse", "Energia", "Przemysł", "Dobra konsumpcyjne",

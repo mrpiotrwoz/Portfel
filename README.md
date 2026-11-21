@@ -30,6 +30,15 @@ Twoje ilości akcji, koszty i wpłaty **nie trafiają do repozytorium**. Strona 
 3. Zrób to na każdym urządzeniu, bo dane portfela są zapisywane osobno na każdym.
 4. Po zmianach (nowy raport, edycja) przycisk **Zapisz kopię** daje nowy plik `.json` do przeniesienia na inne urządzenie.
 
+## Historia portfela
+
+Wykres „Historia portfela” odtwarza każdy dzień od pierwszej wpłaty: akcje, które wtedy były na rachunku, po kursie zamknięcia z tego dnia, plus gotówka z tego dnia. Linia „Wpłacono” rośnie przy każdej wpłacie i przelewie; wpłaty w USD liczone są po kursie NBP z dnia wpłaty.
+
+- Daty transakcji strona bierze z raportu XTB (arkusze otwartych pozycji, zamkniętych pozycji i operacji gotówkowych). Kopia `.json` z „Zapisz kopię” też je zawiera.
+- Raport może być jednym plikiem z wszystkimi arkuszami albo kilkoma osobnymi plikami z tego samego rachunku – strona je połączy. Zaznacz wszystkie pliki naraz przy imporcie.
+- Kursy historyczne są w `data/history.json`. Instrumenty notowane w innej walucie niż wskazuje giełda zapisane są w polu `cur` (np. ETF-y z Londynu w USD).
+- Gdy kupisz spółkę spoza `data/watchlist.json`, dopisz ją tam, żeby skrypt zbierał jej kursy. Do czasu, aż będą kursy, wykres wycenia ją po cenie zakupu.
+
 ## Widżet (Scriptable)
 
 1. Zainstaluj darmową aplikację **Scriptable** z App Store.
