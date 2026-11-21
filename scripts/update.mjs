@@ -168,20 +168,31 @@ function lastSessionDay(tz) {
   if (wd === 0) d.setUTCDate(d.getUTCDate() - 2);
   return d.toISOString().slice(0, 10);
 }
+// Liczba w zapisie „307.80”, „307,80” lub „151 743,67”.
 function plNum(s) {
-  const n = parseFloat(String(s || "").replace(/[\s ]/g, "").replace(",", "."));
+  let t = String(s || "").replace(/[\s ]/g, "");
+  t = t.includes(".") && t.includes(",") ? t.replace(/,/g, "") : t.replace(",", ".");
+  const n = parseFloat(t);
   return isFinite(n) ? n : null;
 }
+const PL_NUM = "([\\d\\s\\u00a0.,]+)";
 async function biznesradar(code) {
   const html = await req(`https://www.biznesradar.pl/notowania/${encodeURIComponent(code)}`, { type: "text" });
-  const m = html.match(/class="q_ch_act"[^>]*>\s*([\d\s ]+(?:,\d+)?)/);
-  const price = m ? plNum(m[1]) : null;
+  const price = plNum((html.match(new RegExp(`class="q_ch_act"[^>]*>\\s*${PL_NUM}<`)) || [])[1]);
   if (!(price > 0)) throw new Error("brak kursu");
-  // Data notowania: pełna data, jeśli jest w nagłówku, inaczej dzisiejsza sesja (w weekend piątek).
-  const dm = html.match(/class="q_ch_date"[^>]*>[\s\S]{0,80}?(\d{2})\.(\d{2})\.(\d{4})/);
-  const date = dm ? `${dm[3]}-${dm[2]}-${dm[1]}` : lastSessionDay(MARKET.PL.tz);
-  const pm = html.match(/Kurs odniesienia[\s\S]{0,200}?>\s*([\d\s ]+,\d+)\s*</);
-  return simpleResult("PL", price, date, pm ? plNum(pm[1]) : null, "PLN", "biznesradar");
+  // Data notowania z atrybutu datetime, zapasowo DD.MM.RRRR, a bez niej ostatnia sesja (w weekend piątek).
+  const di = html.match(/class="q_ch_date"[^>]*datetime="(\d{4}-\d{2}-\d{2})/);
+  const dm = di ? null : html.match(/class="q_ch_date"[^>]*>[\s\S]{0,80}?(\d{2})\.(\d{2})\.(\d{4})/);
+  const date = di ? di[1] : dm ? `${dm[3]}-${dm[2]}-${dm[1]}` : lastSessionDay(MARKET.PL.tz);
+  // Poprzednie zamknięcie i jego data z wiersza „Zmiana 1d”.
+  const pm = html.match(new RegExp(`Zmiana 1d[\\s\\S]{0,400}?class="q_ch_prev"[^>]*>\\s*${PL_NUM}<\\/span>\\s*<\\/td>\\s*<td>(\\d{2})\\.(\\d{2})\\.(\\d{4})`));
+  const prevClose = pm ? plNum(pm[1]) : null;
+  const r = simpleResult("PL", price, date, prevClose, "PLN", "biznesradar");
+  if (prevClose > 0) {
+    const prevDate = `${pm[4]}-${pm[3]}-${pm[2]}`;
+    if (prevDate < date) r.closes.unshift({ date: prevDate, close: prevClose });
+  }
+  return r;
 }
 
 // ---------- Test źródeł na starcie ----------
@@ -244,7 +255,7 @@ const latest = await readJSON("latest.json", {});
 const history = await readJSON("history.json", { days: [] });
 
 // Szybki test źródeł; niedziałające pomijam od razu.
-const usBases = watch.symbols.filter((x) => !x.sym.endsWith(".PL")).map((x) => x.sym.split(".")[0]);
+const usBases = watch.symbols.filter((x) => !x.sym.endsWith(".PL")).map((x) => x.cnbc || x.sym.split(".")[0]);
 const plFirst = (watch.symbols.find((x) => x.sym.endsWith(".PL")) || { sym: "SNT.PL" }).sym.split(".")[0];
 const tests = {
   cnbc: probe("cnbc", "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=MU&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json", /"last"/),
@@ -268,8 +279,8 @@ for (const s of watch.symbols) {
   const mkt = s.sym.endsWith(".PL") ? "PL" : "US";
   const base = s.sym.split(".")[0];
   const cands = [];
-  if (mkt === "US") cands.push({ src: "cnbc", t: base });
-  if (mkt === "PL") cands.push({ src: "biznesradar", t: base });
+  if (mkt === "US") cands.push({ src: "cnbc", t: s.cnbc || base });
+  if (mkt === "PL") cands.push({ src: "biznesradar", t: s.biznesradar || base });
   if (s.yahoo) cands.push({ src: "yahoo", t: s.yahoo });
   const gex = s.google ? [s.google] : GOOGLE_EX[mkt].map((ex) => `${base}:${ex}`);
   gex.forEach((g) => cands.push({ src: "google", t: g, mkt }));
