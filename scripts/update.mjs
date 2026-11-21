@@ -309,6 +309,14 @@ try {
   fx = { USD: fxSeries.USD.at(-1).mid, EUR: fxSeries.EUR.at(-1).mid };
 } catch (e) { log(`! NBP: ${e.message} – zostają poprzednie kursy walut`); }
 
+// Brak poprzedniego zamknięcia w źródle (np. GPW): biorę je z historii.
+for (const sym of Object.keys(prices)) {
+  const x = prices[sym];
+  if (!x || x.prevClose > 0 || !x.date) continue;
+  const prior = (history.days || []).filter((d) => d.date < x.date && d.prices && d.prices[sym] > 0).pop();
+  if (prior) x.prevClose = prior.prices[sym];
+}
+
 const now = new Date().toISOString();
 const newLatest = {
   ...latest,
