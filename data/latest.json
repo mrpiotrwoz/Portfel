@@ -712,19 +712,19 @@
  "newsUpdatedAt": "2026-11-20T08:49:51Z",
  "prices": {
   "AAPL.US": {
-   "price": 352.26,
+   "price": 355.58,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 354.07,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "AMD.US": {
-   "price": 387.76,
+   "price": 406.03,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 413.27,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "ASB.PL": {
@@ -736,11 +736,11 @@
    "source": "biznesradar"
   },
   "ASTS.US": {
-   "price": 24.55,
+   "price": 26.02,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 23.6,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "BFT.PL": {
@@ -752,11 +752,11 @@
    "source": "biznesradar"
   },
   "CMPS.US": {
-   "price": 8.44,
+   "price": 8.92,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 8.97,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "CRI.PL": {
@@ -776,83 +776,83 @@
    "source": "biznesradar"
   },
   "CYBN.US": {
-   "price": 7.83,
+   "price": 8.13,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 7.67,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "DFTX.US": {
-   "price": 30.93,
+   "price": 31.09,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 32.23,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "FIX.US": {
-   "price": 1048.79,
+   "price": 1099.58,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 1096.56,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "GHRS.US": {
-   "price": 18.11,
+   "price": 18.65,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 18.97,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "JOBY.US": {
-   "price": 3.63,
+   "price": 3.9,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 3.51,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "LUNR.US": {
-   "price": 8.59,
+   "price": 9.14,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 8.93,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "MU.US": {
-   "price": 568.27,
+   "price": 601.25,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 629.79,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "OKLO.US": {
-   "price": 18.15,
+   "price": 19.47,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 19.2,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "PWR.US": {
-   "price": 550.5,
+   "price": 565.47,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 589.64,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "RKLB.US": {
-   "price": 44.5,
+   "price": 47.02,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 45.98,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "S2B.PL": {
@@ -872,36 +872,36 @@
    "source": "biznesradar"
   },
   "TMDX.US": {
-   "price": 92.98,
+   "price": 94.36,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 93.42,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "VLTO.US": {
-   "price": 120.5,
+   "price": 120.19,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 119.04,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   },
   "HELP.US": {
-   "price": 7.83,
+   "price": 8.13,
    "currency": "USD",
    "date": "2026-11-25",
    "prevClose": 7.67,
-   "final": false,
+   "final": true,
    "source": "cnbc"
   }
  },
- "updatedAt": "2026-11-25T17:22:52.495Z",
+ "updatedAt": "2026-11-25T22:34:05.935Z",
  "bench": {
   "spx": {
-   "value": 7103.97,
+   "value": 7182.78,
    "date": "2026-11-25",
-   "final": false
+   "final": true
   },
   "wig": {
    "value": 150363.09,
