@@ -205,9 +205,9 @@
   }
  ],
  "fx": {
-  "USD": 4.0835,
-  "EUR": 4.4802,
-  "GBP": 5.3533
+  "USD": 4.0754,
+  "EUR": 4.4673,
+  "GBP": 5.3497
  },
  "items": {
   "AAPL.US": {
@@ -712,203 +712,203 @@
  "newsUpdatedAt": "2026-11-20T08:49:51Z",
  "prices": {
   "AAPL.US": {
-   "price": 355.58,
+   "price": 357.9,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 354.07,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 355.58,
+   "final": false,
    "source": "cnbc"
   },
   "AMD.US": {
-   "price": 406.03,
+   "price": 418.97,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 413.27,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 406.03,
+   "final": false,
    "source": "cnbc"
   },
   "ASB.PL": {
-   "price": 144.8,
+   "price": 148.5,
    "currency": "PLN",
-   "date": "2026-11-26",
-   "prevClose": 135.6,
+   "date": "2026-11-27",
+   "prevClose": 144.8,
    "final": true,
    "source": "biznesradar"
   },
   "ASTS.US": {
-   "price": 26.02,
+   "price": 26.37,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 23.6,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 26.02,
+   "final": false,
    "source": "cnbc"
   },
   "BFT.PL": {
-   "price": 6645,
+   "price": 6625,
    "currency": "PLN",
-   "date": "2026-11-26",
-   "prevClose": 6540,
+   "date": "2026-11-27",
+   "prevClose": 6645,
    "final": true,
    "source": "biznesradar"
   },
   "CMPS.US": {
-   "price": 8.92,
+   "price": 9.58,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 8.97,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 8.92,
+   "final": false,
    "source": "cnbc"
   },
   "CRI.PL": {
-   "price": 641,
+   "price": 680,
    "currency": "PLN",
-   "date": "2026-11-26",
-   "prevClose": 608,
+   "date": "2026-11-27",
+   "prevClose": 641,
    "final": true,
    "source": "biznesradar"
   },
   "CRQ.PL": {
-   "price": 148,
+   "price": 156.15,
    "currency": "PLN",
-   "date": "2026-11-26",
-   "prevClose": 135.5,
+   "date": "2026-11-27",
+   "prevClose": 148,
    "final": true,
    "source": "biznesradar"
   },
   "CYBN.US": {
-   "price": 8.13,
+   "price": 9.16,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 7.67,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 8.13,
+   "final": false,
    "source": "cnbc"
   },
   "DFTX.US": {
-   "price": 31.09,
+   "price": 33.54,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 32.23,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 31.09,
+   "final": false,
    "source": "cnbc"
   },
   "FIX.US": {
-   "price": 1099.58,
+   "price": 1117.14,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 1096.56,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 1099.58,
+   "final": false,
    "source": "cnbc"
   },
   "GHRS.US": {
-   "price": 18.65,
+   "price": 20.77,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 18.97,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 18.65,
+   "final": false,
    "source": "cnbc"
   },
   "JOBY.US": {
-   "price": 3.9,
+   "price": 3.99,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 3.51,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 3.9,
+   "final": false,
    "source": "cnbc"
   },
   "LUNR.US": {
-   "price": 9.14,
+   "price": 9.96,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 8.93,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 9.14,
+   "final": false,
    "source": "cnbc"
   },
   "MU.US": {
-   "price": 601.25,
+   "price": 638.8,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 629.79,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 601.25,
+   "final": false,
    "source": "cnbc"
   },
   "OKLO.US": {
-   "price": 19.47,
+   "price": 20.52,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 19.2,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 19.47,
+   "final": false,
    "source": "cnbc"
   },
   "PWR.US": {
-   "price": 565.47,
+   "price": 578.19,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 589.64,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 565.47,
+   "final": false,
    "source": "cnbc"
   },
   "RKLB.US": {
-   "price": 47.02,
+   "price": 50.05,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 45.98,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 47.02,
+   "final": false,
    "source": "cnbc"
   },
   "S2B.PL": {
-   "price": 50.06,
+   "price": 51.4,
    "currency": "PLN",
-   "date": "2026-11-26",
-   "prevClose": 49.66,
+   "date": "2026-11-27",
+   "prevClose": 50.06,
    "final": true,
    "source": "biznesradar"
   },
   "SNT.PL": {
-   "price": 308.6,
+   "price": 317,
    "currency": "PLN",
-   "date": "2026-11-26",
-   "prevClose": 303,
+   "date": "2026-11-27",
+   "prevClose": 308.6,
    "final": true,
    "source": "biznesradar"
   },
   "TMDX.US": {
-   "price": 94.36,
+   "price": 97.4,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 93.42,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 94.36,
+   "final": false,
    "source": "cnbc"
   },
   "VLTO.US": {
-   "price": 120.19,
+   "price": 120.59,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 119.04,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 120.19,
+   "final": false,
    "source": "cnbc"
   },
   "HELP.US": {
-   "price": 8.13,
+   "price": 9.16,
    "currency": "USD",
-   "date": "2026-11-25",
-   "prevClose": 7.67,
-   "final": true,
+   "date": "2026-11-27",
+   "prevClose": 8.13,
+   "final": false,
    "source": "cnbc"
   }
  },
- "updatedAt": "2026-11-26T22:35:24.516Z",
+ "updatedAt": "2026-11-27T17:27:44.203Z",
  "bench": {
   "spx": {
-   "value": 7182.78,
-   "date": "2026-11-25",
-   "final": true
+   "value": 7283.94,
+   "date": "2026-11-27",
+   "final": false
   },
   "wig": {
-   "value": 152971.09,
-   "date": "2026-11-26",
+   "value": 154629.67,
+   "date": "2026-11-27",
    "final": true
   }
  },
- "fxDate": "2026-11-26",
+ "fxDate": "2026-11-27",
  "source": "github-actions"
 }
